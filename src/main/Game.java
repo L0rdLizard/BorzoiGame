@@ -35,7 +35,7 @@ public class Game implements Runnable{
     }
 
     private void initClasses() {
-        player = new Player(200, 200);
+        player = new Player(900, 600);
     }
 
     private void startGameLoop(){
@@ -89,6 +89,10 @@ public class Game implements Runnable{
                 updates = 0;
             }
         }
+    }
+
+    public void windowFocusLost(){
+        player.resetDirBooleans();
     }
     public Player getPlayer(){
         return player;

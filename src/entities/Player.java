@@ -13,29 +13,32 @@ public class Player extends Entity{
     private BufferedImage[][] animations;
     private int animTick, animIndex, animSpeed = 30;
     public int playerAction = IDLE;
-    public int playerDir = -1;
+//    public int playerDir = -1;
+    boolean left, right, up, down;
     private boolean moving = false;
+    private float playerSpeed = 2.0f;
     public Player(float x, float y) {
         super(x, y);
         loadAnimation();
 
     }
     public void update(){
+        updatePos();
         updateAnimationTick();
         setAnimation();
-        updatePos();
+
     }
     public void render(Graphics g){
         g.drawImage(animations[playerAction][animIndex], (int) x, (int) y, 256, 192, null);
     }
 
-    public void setDirection (int direction){
-        this.playerDir = direction;
-        moving = true;
-    }
-    public void setMoving (boolean moving){
-        this.moving = moving;
-    }
+//    public void setDirection (int direction){
+//        this.playerDir = direction;
+//        moving = true;
+//    }
+//    public void setMoving (boolean moving){
+//        this.moving = moving;
+//    }
 
     private void updateAnimationTick() {
         animTick++;
@@ -56,14 +59,30 @@ public class Player extends Entity{
     }
 
     private void updatePos() {
-        if (moving){
-            switch (playerDir) {
-                case LEFT -> x -= 5;
-                case UP -> y -= 5;
-                case RIGHT -> x += 5;
-                case DOWN -> y += 5;
-            }
+        moving = false;
+        if (left && !right){
+            x-=playerSpeed;
+            moving = true;
+        }else if(right && !left){
+            x+=playerSpeed;
+            moving = true;
         }
+
+        if (up && !down){
+            y-=playerSpeed;
+            moving = true;
+        }else if(down && !up){
+            y+=playerSpeed;
+            moving = true;
+        }
+//        if (moving){
+//            switch (playerDir) {
+//                case LEFT -> x -= 1;
+//                case UP -> y -= 1;
+//                case RIGHT -> x += 1;
+//                case DOWN -> y += 1;
+//            }
+//        }
     }
     private void loadAnimation(){
         InputStream is = getClass().getResourceAsStream("/pito_animation_run_idle_sheet.png");
@@ -87,5 +106,42 @@ public class Player extends Entity{
                 e.printStackTrace();
             }
         }
+    }
+    public void resetDirBooleans(){
+        left = false;
+        right = false;
+        up = false;
+        down = false;
+    }
+    public boolean isLeft() {
+        return left;
+    }
+
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+    public boolean isRight() {
+        return right;
+    }
+
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+    public boolean isUp() {
+        return up;
+    }
+
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
+
+    public void setDown(boolean down) {
+        this.down = down;
     }
 }
