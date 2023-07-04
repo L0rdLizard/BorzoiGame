@@ -1,5 +1,9 @@
 package main;
 
+import entities.Player;
+
+import java.awt.*;
+
 //public class Game{
 //    private GameWindow gameWindow;
 //    private GamePanel gamePanel;
@@ -17,12 +21,21 @@ public class Game implements Runnable{
     private Thread gameTread;
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
+    private Player player;
     public Game(){
-        gamePanel = new GamePanel();
+        initClasses();
+
+        gamePanel = new GamePanel(this);
         gameWindow = new GameWindow(gamePanel);
         gamePanel.setFocusable(true);
         gamePanel.requestFocus();
+
         startGameLoop();
+
+    }
+
+    private void initClasses() {
+        player = new Player(200, 200);
     }
 
     private void startGameLoop(){
@@ -30,15 +43,16 @@ public class Game implements Runnable{
         gameTread.start();
     }
     private void updates() {
-        gamePanel.updateGame();
+        player.update();
+    }
+    public void render(Graphics g){
+        player.render(g);
     }
 
     @Override
     public void run() {
         double timePerFrame = 1000000000.0 / FPS_SET;
         double timePerUpdate = 1000000000.0 / UPS_SET;
-//        long lastFrame = System.nanoTime();
-//        long now = System.nanoTime();
 
         long previousTime = System.nanoTime();
 
@@ -50,7 +64,6 @@ public class Game implements Runnable{
         double deltaF = 0;
 
         while(true){
-//            now = System.nanoTime();
             long currentTime = System.nanoTime();
 
             deltaU +=(currentTime - previousTime) / timePerUpdate;
@@ -69,12 +82,6 @@ public class Game implements Runnable{
                 deltaF--;
             }
 
-//            if (now - lastFrame >= timePerFrame){
-//                gamePanel.repaint();
-//                lastFrame = now;
-//                frames++;
-//            }
-
             if (System.currentTimeMillis() - lastCheck >= 1000){
                 lastCheck = System.currentTimeMillis();
                 System.out.println("FPS: " + frames + " | UPS: " + updates);
@@ -82,5 +89,8 @@ public class Game implements Runnable{
                 updates = 0;
             }
         }
+    }
+    public Player getPlayer(){
+        return player;
     }
 }

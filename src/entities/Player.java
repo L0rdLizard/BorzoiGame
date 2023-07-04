@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static utilz.Constants.Directions.*;
-import static utilz.Constants.Directions.DOWN;
 import static utilz.Constants.PlayerConstants.*;
 
 public class Player extends Entity{
