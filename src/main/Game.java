@@ -1,9 +1,13 @@
 package main;
 
 import entities.Player;
+
+import gameStates.GameStates;
+import gameStates.Menu;
+import gameStates.Playing;
 import levels.LevelManager;
 
-import java.awt.*;
+import java.awt.Graphics;
 
 //public class Game{
 //    private GameWindow gameWindow;
@@ -25,6 +29,9 @@ public class Game implements Runnable{
     private Player player;
     private LevelManager levelManager;
 
+    private Playing playing;
+    private Menu menu;
+
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static float SCALE = 2f;
     public final static int TILES_IN_WIDTH = 26;
@@ -45,10 +52,8 @@ public class Game implements Runnable{
     }
 
     private void initClasses() {
-        levelManager = new LevelManager(this);
-//        player = new Player(500, 400, (int) (48 * SCALE), (int) (36 * SCALE));
-        player = new Player(500, 300, (int) (64 * SCALE), (int) (48 * SCALE));
-        player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
+        menu = new Menu(this);
+        playing = new Playing(this);
     }
 
     private void startGameLoop(){
@@ -56,12 +61,28 @@ public class Game implements Runnable{
         gameTread.start();
     }
     private void updates() {
-        player.update();
-        levelManager.update();
+        switch (GameStates.state){
+            case MENU:
+                menu.update();
+                break;
+            case PLAYING:
+                playing.update();
+                break;
+            default:
+                break;
+        }
     }
     public void render(Graphics g){
-        levelManager.draw(g);
-        player.render(g);
+        switch (GameStates.state){
+            case MENU:
+                menu.draw(g);
+                break;
+            case PLAYING:
+                playing.draw(g);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -107,9 +128,14 @@ public class Game implements Runnable{
     }
 
     public void windowFocusLost(){
-        player.resetDirBooleans();
+        if(GameStates.state == GameStates.PLAYING){
+            playing.getPlayer().resetDirBooleans();
+        }
     }
-    public Player getPlayer(){
-        return player;
+    public Menu getMenu(){
+        return menu;
+    }
+    public Playing getPlaying(){
+        return playing;
     }
 }

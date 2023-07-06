@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class LoadSave {
-    public static final String PLAYER_ATLAS = "pito_animation_run_sheet4.png";
+    public static final String PLAYER_ATLAS = "pito_animation_sheet5_1.png";
     public static final String LEVEL_ATLAS = "outside_sprites.png";
     public static final String LEVEL_ONE_DATA = "level_one_data.png";
     public static BufferedImage GetSpriteAtlas(String filename){

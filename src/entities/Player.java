@@ -29,8 +29,8 @@ public class Player extends Entity{
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
     private boolean inAir = false;
 
-    private float xDrawOffset = 13 * Game.SCALE;
-    private float yDrawOffset = 14 * Game.SCALE;
+    private float xDrawOffset = 36 * Game.SCALE;
+    private float yDrawOffset = 29 * Game.SCALE;
     public Player(float x, float y, int width, int height) {
         super(x, y, width, height);
         loadAnimation();
@@ -147,11 +147,12 @@ public class Player extends Entity{
     private void loadAnimation(){
 //        InputStream is = getClass().getResourceAsStream("/pito_animation_run_idle_sheet.png");
         BufferedImage image = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
-        animations = new BufferedImage[4][5];
+        animations = new BufferedImage[5][6];
         for (int j = 0; j < animations.length; j++) {
             for (int i = 0; i < animations[j].length; i++) {
 //                animations[j][i] = image.getSubimage(i * 32, j * 24, 32, 24);
-                animations[j][i] = image.getSubimage(i * 64, j * 48, 64, 48);
+//                animations[j][i] = image.getSubimage(i * 64, j * 48, 64, 48);
+                animations[j][i] = image.getSubimage(i * 80, j * 64, 80, 64);
             }
         }
     }
