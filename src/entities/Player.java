@@ -15,8 +15,8 @@ import static utilz.Constants.PlayerConstants.*;
 
 public class Player extends Entity{
     private BufferedImage[][] animations;
-    private int animTick, animIndex, animSpeed = 20;
-    public int playerAction = IDLE;
+    private int animTick, animIndex, animSpeed = 22;
+    private int playerAction = IDLE;
     boolean left, right, up, down, jump;
     private boolean moving = false, attacking = false;
     private float playerSpeed = 2.0f;
