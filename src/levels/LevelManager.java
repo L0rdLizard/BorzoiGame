@@ -28,14 +28,23 @@ public class LevelManager {
         }
     }
 
-    public void  draw(Graphics g, int lvlOffset){
-        for (int j = 0; j < Game.TILES_IN_HEIGHT; j++){
-            for (int i = 0; i < levelOne.getLvlData()[0].length; i++){
-                int index = levelOne.getSpriteIndex(i, j);
-                g.drawImage(levelSprite[index], Game.TILES_SIZE * i - lvlOffset, Game.TILES_SIZE * j, Game.TILES_SIZE, Game.TILES_SIZE, null);
-            }
+//    public void  draw(Graphics g, int lvlOffset, int yLvlOffset){
+//        for (int j = 0; j < Game.TILES_IN_HEIGHT; j++){
+//            for (int i = 0; i < levelOne.getLvlData()[0].length; i++){
+//                int index = levelOne.getSpriteIndex(i, j);
+//                g.drawImage(levelSprite[index], Game.TILES_SIZE * i - lvlOffset, Game.TILES_SIZE * j - yLvlOffset, Game.TILES_SIZE, Game.TILES_SIZE, null);
+//            }
+//        }
+//    }
+public void  draw(Graphics g, int lvlOffset, int yLvlOffset){
+    for (int j = 0; j < levelOne.getLvlData().length; j++){
+        for (int i = 0; i < levelOne.getLvlData()[0].length; i++){
+            int index = levelOne.getSpriteIndex(i, j);
+            g.drawImage(levelSprite[index], Game.TILES_SIZE * i - lvlOffset, Game.TILES_SIZE * j - yLvlOffset, Game.TILES_SIZE, Game.TILES_SIZE, null);
         }
     }
+}
+
     public void update(){
 
     }

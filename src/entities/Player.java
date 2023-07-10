@@ -42,9 +42,9 @@ public class Player extends Entity{
         setAnimation();
 
     }
-    public void render(Graphics g, int lvlOffset){
-        g.drawImage(animations[playerAction][animIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int)(hitbox.y - yDrawOffset), width, height, null);
-        drawHitbox(g, lvlOffset);
+    public void render(Graphics g, int lvlOffset, int yLvlOffset){
+        g.drawImage(animations[playerAction][animIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int)(hitbox.y - yDrawOffset) - yLvlOffset, width, height, null);
+        drawHitbox(g, lvlOffset, yLvlOffset);
     }
 
 

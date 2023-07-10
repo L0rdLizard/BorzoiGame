@@ -16,9 +16,16 @@ public class Playing extends State implements StateMethods{
     private int xLvlOffset;
     private int leftBorder = (int)(0.5 * Game.GAME_WIDTH);
     private int rightBorder = (int)(0.5 * Game.GAME_WIDTH);
-    private int lvlTilesWide = LoadSave.GetLevelData()[0].length;
-    private int maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
-    private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
+    private int lvlTilesWidth = LoadSave.GetLevelData()[0].length;
+    private int maxTilesOffsetX = lvlTilesWidth - Game.TILES_IN_WIDTH;
+    private int maxLvlOffsetX = maxTilesOffsetX * Game.TILES_SIZE;
+
+    private int yLvlOffset;
+    private int upBorder = (int)(0.6 * Game.GAME_HEIGHT);
+    private int downBorder = (int)(0.4 * Game.GAME_HEIGHT);
+    private int lvlTilesHeight = LoadSave.GetLevelData().length;
+    private int maxTilesOffsetY = lvlTilesHeight - Game.TILES_IN_HEIGHT;
+    private int maxLvlOffsetY = maxTilesOffsetY * Game.TILES_SIZE;
     public Playing(Game game){
         super(game);
         initClasses();
@@ -36,6 +43,7 @@ public class Playing extends State implements StateMethods{
         levelManager.update();
         player.update();
         checkCloseToBorder();
+        checkCloseToRoof();
     }
 
     private void checkCloseToBorder() {
@@ -55,10 +63,27 @@ public class Playing extends State implements StateMethods{
         }
     }
 
+    private void checkCloseToRoof() {
+        int playerY = (int) player.getHitbox().y;
+        int diff = playerY - yLvlOffset;
+
+        if (diff > upBorder){
+            yLvlOffset += diff - upBorder;
+        } else if (diff < downBorder){
+            yLvlOffset += diff - downBorder;
+        }
+
+        if(yLvlOffset > maxLvlOffsetY)
+            yLvlOffset = maxLvlOffsetY;
+        else if (yLvlOffset < 0){
+            yLvlOffset = 0;
+        }
+    }
+
     @Override
     public void draw(Graphics g) {
-        levelManager.draw(g, xLvlOffset);
-        player.render(g, xLvlOffset);
+        levelManager.draw(g, xLvlOffset, yLvlOffset);
+        player.render(g, xLvlOffset, yLvlOffset);
     }
 
     @Override

@@ -13,6 +13,7 @@ public class LoadSave {
     public static final String LEVEL_ATLAS = "outside_sprites.png";
     public static final String LEVEL_ONE_DATA = "level_one_data.png";
     public static final String LEVEL_ONE_DATA_LONG = "level_one_data_long.png";
+    public static final String MY_MAP = "myMap.png";
     public static final String MENU_BUTTONS = "button_atlas.png";
     public static final String MENU_BACKGROUND = "menu_background.png";
     public static BufferedImage GetSpriteAtlas(String filename){
@@ -39,7 +40,7 @@ public class LoadSave {
         //TODO remake level loading
 //        int[][] lvlData = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
 
-        BufferedImage lvlImage = GetSpriteAtlas(LEVEL_ONE_DATA_LONG);
+        BufferedImage lvlImage = GetSpriteAtlas(MY_MAP);
         int[][] lvlData = new int[lvlImage.getHeight()][lvlImage.getWidth()];
 
         for (int j = 0; j < lvlImage.getHeight(); j++){
