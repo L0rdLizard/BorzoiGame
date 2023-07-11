@@ -3,6 +3,36 @@ package utilz;
 import main.Game;
 
 public class Constants {
+    public static class EnemyConstants{
+        public static final int BALL = 0;
+
+        public static final int IDLE = 0;
+        public static final int RUNNING = 1;
+        public static final int ATTACK = 2;
+        public static final int HIT = 3;
+        public static final int DEAD = 4;
+
+        public static final int BALL_WIDTH_DEFAULT = 80;
+        public static final int BALL_HEIGHT_DEFAULT = 64;
+
+        public static final int BALL_WIDTH = (int) (BALL_WIDTH_DEFAULT * Game.SCALE);
+        public static final int BALL_HEIGHT = (int) (BALL_HEIGHT_DEFAULT * Game.SCALE);
+
+        public static int GetSpriteAmount(int enemy_type, int enemy_state){
+            switch (enemy_type){
+                case BALL:
+                    switch (enemy_state){
+                        case IDLE:
+                            return 4;
+                        case RUNNING:
+                            return 4;
+                        case ATTACK:
+                            return 6;
+                    }
+            }
+            return 0;
+        }
+    }
     public static class UI{
         public static class Buttons{
             public static final int B_WIDTH_DEFAULT = 140;
