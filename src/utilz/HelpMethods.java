@@ -1,5 +1,6 @@
 package utilz;
 
+import entities.Player;
 import main.Game;
 
 import java.awt.*;
@@ -67,7 +68,7 @@ public class HelpMethods {
 //            return currentTile * Game.TILES_SIZE;
     }
 
-    public static boolean IsEntityOnFloor(Rectangle2D.Float hitbox, int[][] lvlData) {
+    public static boolean IsEntityOnFloor(Rectangle2D.Float hitbox, int[][] lvlData, Player player) {
         // Check the pixel below bottomleft and bottomright
         if (!IsSolid(hitbox.x, hitbox.y + hitbox.height + 1, lvlData))
             if (!IsSolid(hitbox.x + hitbox.width, hitbox.y + hitbox.height + 1, lvlData))

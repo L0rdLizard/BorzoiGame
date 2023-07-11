@@ -6,11 +6,15 @@ import levels.LevelManager;
 import main.Game;
 import utilz.LoadSave;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public class Playing extends State implements StateMethods{
+    private Timer timer;
     private Player player;
     private LevelManager levelManager;
     private EnemyManager enemyManager;
@@ -141,6 +145,8 @@ public class Playing extends State implements StateMethods{
                 break;
             case KeyEvent.VK_SPACE:
                 player.setJump(false);
+                player.doubleJump = true;
+                player.jumps++;
                 break;
         }
     }
@@ -151,4 +157,5 @@ public class Playing extends State implements StateMethods{
     public Player getPlayer(){
         return player;
     }
+
 }

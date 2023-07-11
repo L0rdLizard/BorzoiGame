@@ -31,6 +31,8 @@ public class Player extends Entity{
 
     private float xDrawOffset = 36 * Game.SCALE;
     private float yDrawOffset = 29 * Game.SCALE;
+    public boolean doubleJump = false;
+    public int jumps = 0;
     public Player(float x, float y, int width, int height) {
         super(x, y, width, height);
         loadAnimation();
@@ -107,7 +109,7 @@ public class Player extends Entity{
             xSpeed += playerSpeed;
 
         if (!inAir)
-            if (!IsEntityOnFloor(hitbox, lvlData))
+            if (!IsEntityOnFloor(hitbox, lvlData, this))
                 inAir = true;
 
         if (inAir) {
@@ -130,15 +132,24 @@ public class Player extends Entity{
     }
 
     private void jump() {
+//        if (inAir)
+//            return;
         if (inAir)
-            return;
+            if (doubleJump && jumps < 2) {
+                airSpeed = jumpSpeed;
+                doubleJump = false;
+                return;
+            }else
+                return;
         inAir = true;
+        doubleJump = true;
         airSpeed = jumpSpeed;
     }
 
     private void resetInAir() {
         inAir = false;
         airSpeed = 0;
+        jumps = 0;
     }
 
     private void updateXPos(float xSpeed) {
@@ -163,7 +174,7 @@ public class Player extends Entity{
 
     public void loadLvlData(int[][] lvlData) {
         this.lvlData = lvlData;
-        if (!IsEntityOnFloor(hitbox, lvlData))
+        if (!IsEntityOnFloor(hitbox, lvlData, this))
             inAir = true;
     }
     public void resetDirBooleans(){
