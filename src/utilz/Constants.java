@@ -18,6 +18,9 @@ public class Constants {
         public static final int BALL_WIDTH = (int) (BALL_WIDTH_DEFAULT * Game.SCALE);
         public static final int BALL_HEIGHT = (int) (BALL_HEIGHT_DEFAULT * Game.SCALE);
 
+        public static final int BALL_DRAWOFFSET_X = (int) (36 * Game.SCALE);
+        public static final int BALL_DRAWOFFSET_Y = (int) (29 * Game.SCALE);
+
         public static int GetSpriteAmount(int enemy_type, int enemy_state){
             switch (enemy_type){
                 case BALL:

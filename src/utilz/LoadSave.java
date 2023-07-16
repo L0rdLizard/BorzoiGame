@@ -14,8 +14,6 @@ import java.util.ArrayList;
 public class LoadSave {
     public static final String PLAYER_ATLAS = "pito_animation_sheet5_1.png";
     public static final String LEVEL_ATLAS = "outside_sprites.png";
-    public static final String LEVEL_ONE_DATA = "level_one_data.png";
-    public static final String LEVEL_ONE_DATA_LONG = "level_one_data_long.png";
     public static final String MY_MAP = "myMap_enemy.png";
     public static final String MENU_BUTTONS = "button_atlas.png";
     public static final String MENU_BACKGROUND = "menu_background.png";

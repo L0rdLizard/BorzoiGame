@@ -109,7 +109,7 @@ public class Player extends Entity{
             xSpeed += playerSpeed;
 
         if (!inAir)
-            if (!IsEntityOnFloor(hitbox, lvlData, this))
+            if (!IsEntityOnFloor(hitbox, lvlData))
                 inAir = true;
 
         if (inAir) {
@@ -174,7 +174,7 @@ public class Player extends Entity{
 
     public void loadLvlData(int[][] lvlData) {
         this.lvlData = lvlData;
-        if (!IsEntityOnFloor(hitbox, lvlData, this))
+        if (!IsEntityOnFloor(hitbox, lvlData))
             inAir = true;
     }
     public void resetDirBooleans(){
