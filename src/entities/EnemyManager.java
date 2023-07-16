@@ -38,7 +38,10 @@ public class EnemyManager {
 
     private void drawBall(Graphics g, int xLvlOffset, int yLvlOffset) {
         for (Ball b : balls){
-            g.drawImage(ballImgs[b.getEnemyState()][b.getAnimIndex()], (int) (b.getHitbox().x - xDrawOffset) - xLvlOffset, (int) (b.getHitbox().y - yDrawOffset) - yLvlOffset, BALL_WIDTH, BALL_HEIGHT, null);
+            g.drawImage(ballImgs[b.getEnemyState()][b.getAnimIndex()],
+                    (int) (b.getHitbox().x) - xLvlOffset - BALL_DRAWOFFSET_X + b.flipX(),
+                    (int) (b.getHitbox().y) - yLvlOffset - BALL_DRAWOFFSET_Y,
+                    BALL_WIDTH * b.flipW(), BALL_HEIGHT, null);
         }
     }
 
