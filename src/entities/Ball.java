@@ -18,41 +18,18 @@ public class Ball extends Enemy{
 
     public void updateMove(int[][] lvlData){
         if (firstUpdate){
-            if(!IsEntityOnFloor(hitbox , lvlData)){
-                inAir = true;
-            }
-            firstUpdate = false;
+            firstupdateCheck(lvlData);
         }
 
         if (inAir){
-            if(CanMoveHere(hitbox.x, hitbox.y, hitbox.width, hitbox.height, lvlData)){
-                hitbox.y += fallSpeed;
-                fallSpeed += gravity;
-            }else {
-                inAir = false;
-                hitbox.y = GetEntityYPosNextToBarrier(hitbox, fallSpeed);
-            }
+            updateInAir(lvlData);
         }else {
             switch (enemyState){
                 case IDLE:
                     enemyState = RUNNING;
                     break;
                 case RUNNING:
-                    float xSpeed = 0;
-
-                    if (walkDir == LEFT)
-                        xSpeed = -walkSpeed;
-                    else
-                        xSpeed = walkSpeed;
-
-                    if(CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData))
-                        if(IsFloor(hitbox, xSpeed, lvlData)){
-                            hitbox.x += xSpeed;
-                            return;
-                        }
-
-                    changeWalDir();
-
+                    move(lvlData);
                     break;
             }
         }

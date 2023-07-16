@@ -21,6 +21,40 @@ public abstract class Enemy extends Entity {
         this.enemyType = enemyType;
         initHitbox(x, y, width, height);
     }
+
+    protected void firstupdateCheck(int[][] lvlData){
+        if(!IsEntityOnFloor(hitbox , lvlData)){
+            inAir = true;
+        }
+        firstUpdate = false;
+    }
+
+    protected void updateInAir(int[][] lvlData){
+        if(CanMoveHere(hitbox.x, hitbox.y, hitbox.width, hitbox.height, lvlData)){
+            hitbox.y += fallSpeed;
+            fallSpeed += gravity;
+        }else {
+            inAir = false;
+            hitbox.y = GetEntityYPosNextToBarrier(hitbox, fallSpeed);
+        }
+    }
+
+    protected void move(int[][] lvlData){
+        float xSpeed = 0;
+
+        if (walkDir == LEFT)
+            xSpeed = -walkSpeed;
+        else
+            xSpeed = walkSpeed;
+
+        if(CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData))
+            if(IsFloor(hitbox, xSpeed, lvlData)){
+                hitbox.x += xSpeed;
+                return;
+            }
+
+        changeWalDir();
+    }
     protected void updateAnimationTick(){
         animTick++;
         if(animTick >= animSpeed){
@@ -31,8 +65,6 @@ public abstract class Enemy extends Entity {
             }
         }
     }
-
-
 
     protected void changeWalDir() {
         if(walkDir == LEFT)
