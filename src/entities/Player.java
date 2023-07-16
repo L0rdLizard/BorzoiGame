@@ -22,6 +22,8 @@ public class Player extends Entity{
     private boolean moving = false, attacking = false;
     private float playerSpeed = 1.0f * Game.SCALE;
     private int[][] lvlData;
+    private int flipX = 0;
+    private int flipW = 1;
 
     // Jumping
     private float airSpeed = 0f;
@@ -98,7 +100,10 @@ public class Player extends Entity{
     }
 
     public void render(Graphics g, int lvlOffset, int yLvlOffset) {
-        g.drawImage(animations[playerAction][animIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int) (hitbox.y - yDrawOffset) - yLvlOffset, width, height, null);
+        g.drawImage(animations[playerAction][animIndex],
+                (int) (hitbox.x - xDrawOffset) - lvlOffset + flipX,
+                (int) (hitbox.y - yDrawOffset) - yLvlOffset,
+                width * flipW, height, null);
         drawHitbox(g, lvlOffset, yLvlOffset);
         drawAttackBox(g, lvlOffset, yLvlOffset);
         drawUI(g);
@@ -167,10 +172,17 @@ public class Player extends Entity{
 
         float xSpeed = 0;
 
-        if (left)
+        if (left) {
             xSpeed -= playerSpeed;
-        if (right)
+            flipX = 0;
+            flipW = 1;
+
+        }
+        if (right) {
             xSpeed += playerSpeed;
+            flipX = width + 44;
+            flipW = -1;
+        }
 
         if (!inAir)
             if (!IsEntityOnFloor(hitbox, lvlData))
