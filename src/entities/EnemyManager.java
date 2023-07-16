@@ -28,9 +28,9 @@ public class EnemyManager {
         System.out.println("size of ball: " + balls.size());
     }
 
-    public void update(int[][] lvlData){
+    public void update(int[][] lvlData, Player player){
         for (Ball b : balls)
-            b.update(lvlData);
+            b.update(lvlData, player);
     }
     public void draw(Graphics g, int xLvlOffset, int yLvlOffset){
         drawBall(g, xLvlOffset, yLvlOffset);
