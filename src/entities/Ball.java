@@ -25,9 +25,11 @@ public class Ball extends Enemy{
     }
 
     public void update(int[][] lvlData, Player player){
-        updateMove(lvlData, player);
-        updateAnimationTick();
-        updateAttackBox();
+        if (active) {
+            updateBehavior(lvlData, player);
+            updateAnimationTick();
+            updateAttackBox();
+        }
     }
 
     private void updateAttackBox() {
@@ -43,7 +45,7 @@ public class Ball extends Enemy{
 
 
 
-    public void updateMove(int[][] lvlData, Player player){
+    public void updateBehavior(int[][] lvlData, Player player){
         if (firstUpdate){
             firstupdateCheck(lvlData);
         }
@@ -63,9 +65,21 @@ public class Ball extends Enemy{
 
                     move(lvlData);
                     break;
+                case ATTACK:
+                    if (animIndex == 0)
+                        attackChecked = false;
+                    if (animIndex == 3 && !attackChecked){
+                        checkPlayerHit(attackBox, player);
+                    }
+                    break;
+                case HIT:
+                    break;
             }
         }
     }
+
+
+
     public int flipX(){
         if (walkDir == RIGHT)
             return width + 44;

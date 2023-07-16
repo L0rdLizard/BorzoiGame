@@ -10,7 +10,7 @@ public class Constants {
         public static final int RUNNING = 1;
         public static final int ATTACK = 4;
         public static final int HIT = 3;
-        public static final int DEAD = 4;
+        public static final int DEAD = 2;
 
         public static final int BALL_WIDTH_DEFAULT = 80;
         public static final int BALL_HEIGHT_DEFAULT = 64;
@@ -34,6 +34,23 @@ public class Constants {
                     }
             }
             return 0;
+        }
+        public static int GetMaxHP(int enemy_type){
+            switch (enemy_type){
+                case BALL:
+                    return 2;
+                default:
+                    return 1;
+            }
+        }
+
+        public static int GetEnemyDmg(int enemy_type){
+            switch (enemy_type){
+                case BALL:
+                    return 1;
+                default:
+                    return 0;
+            }
         }
     }
     public static class UI{
