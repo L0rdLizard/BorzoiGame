@@ -5,6 +5,7 @@ import utilz.LoadSave;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,24 +30,87 @@ public class Player extends Entity{
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
     private boolean inAir = false;
 
+    // Jump / Gravity
+    private BufferedImage hpBarImg;
     private float xDrawOffset = 36 * Game.SCALE;
     private float yDrawOffset = 29 * Game.SCALE;
     public boolean doubleJump = false;
     public int jumps = 0;
+
+    // HP bar
+    private int hpBarWidth = (int) (96 * Game.SCALE);
+    private int hpBarHeight = (int) (32 * Game.SCALE);
+    private int hpBarX = (int) (10 * Game.SCALE);
+    private int hpBarY = (int) (10 * Game.SCALE);
+    private int maxHealth = 3;
+    private int currentHealth = maxHealth;
+
+    // Attack hitbox
+    private Rectangle2D.Float attackBox;
+
     public Player(float x, float y, int width, int height) {
         super(x, y, width, height);
         loadAnimation();
         initHitbox(x, y, (int) (30*Game.SCALE), (int) (30*Game.SCALE));
+        initAttackBox();
     }
+
+    private void initAttackBox() {
+        attackBox = new Rectangle2D.Float(x, y, (int)(30 * Game.SCALE), (int)(40 * Game.SCALE));
+    }
+
     public void update(){
+        updateHealthBar();
+        updateAttackBox();
+
         updatePos();
         updateAnimationTick();
         setAnimation();
-
     }
-    public void render(Graphics g, int lvlOffset, int yLvlOffset){
-        g.drawImage(animations[playerAction][animIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int)(hitbox.y - yDrawOffset) - yLvlOffset, width, height, null);
+
+    private void updateAttackBox() {
+        if (right){
+            attackBox.x = hitbox.x + hitbox.width + (int) (Game.SCALE * 5);
+        } else if (left){
+            attackBox.x = hitbox.x - hitbox.width - (int) (Game.SCALE * 5);
+        }
+        attackBox.y = hitbox.y - (Game.SCALE * 10);
+    }
+
+    private void updateHealthBar() {
+        switch (currentHealth){
+            case 3:
+                hpBarImg = LoadSave.GetSpriteAtlas(LoadSave.HP_BAR3);
+                break;
+            case 2:
+                hpBarImg = LoadSave.GetSpriteAtlas(LoadSave.HP_BAR3_1);
+                break;
+            case 1:
+                hpBarImg = LoadSave.GetSpriteAtlas(LoadSave.HP_BAR3_2);
+                break;
+            case 0:
+                hpBarImg = LoadSave.GetSpriteAtlas(LoadSave.HP_BAR3_3);
+                break;
+            default:
+                hpBarImg = LoadSave.GetSpriteAtlas(LoadSave.HP_BAR3_3);
+                break;
+        }
+    }
+
+    public void render(Graphics g, int lvlOffset, int yLvlOffset) {
+        g.drawImage(animations[playerAction][animIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int) (hitbox.y - yDrawOffset) - yLvlOffset, width, height, null);
         drawHitbox(g, lvlOffset, yLvlOffset);
+        drawAttackBox(g, lvlOffset, yLvlOffset);
+        drawUI(g);
+    }
+
+    private void drawAttackBox(Graphics g, int lvlOffset, int yLvlOffset) {
+        g.setColor(Color.black);
+        g.drawRect((int) attackBox.x - lvlOffset, (int) attackBox.y - yLvlOffset, (int) attackBox.width, (int) attackBox.height);
+    }
+
+    private void drawUI(Graphics g) {
+        g.drawImage(hpBarImg, hpBarX, hpBarY, hpBarWidth, hpBarHeight, null);
     }
 
 
@@ -159,9 +223,19 @@ public class Player extends Entity{
             hitbox.x = GetEntityXPosNextToWall(hitbox, xSpeed);
         }
     }
+
+    public void changeHealth(int value){
+        currentHealth += value;
+        if (currentHealth <= 0){
+            currentHealth = 0;
+            // gameOver();
+        }else if (currentHealth >= maxHealth)
+            currentHealth = maxHealth;
+    }
     private void loadAnimation(){
-//        InputStream is = getClass().getResourceAsStream("/pito_animation_run_idle_sheet.png");
+
         BufferedImage image = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
+
         animations = new BufferedImage[5][6];
         for (int j = 0; j < animations.length; j++) {
             for (int i = 0; i < animations[j].length; i++) {
@@ -170,6 +244,7 @@ public class Player extends Entity{
                 animations[j][i] = image.getSubimage(i * 80, j * 64, 80, 64);
             }
         }
+        hpBarImg = LoadSave.GetSpriteAtlas(LoadSave.HP_BAR3);
     }
 
     public void loadLvlData(int[][] lvlData) {

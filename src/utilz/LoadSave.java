@@ -17,6 +17,14 @@ public class LoadSave {
     public static final String MY_MAP = "myMap_enemy.png";
     public static final String MENU_BUTTONS = "button_atlas.png";
     public static final String MENU_BACKGROUND = "menu_background.png";
+    public static final String MENU_BACKGROUND_IMG = "dark.png";
+    public static final String MENU_BACKGROUND_IMG_PLAYING = "dark.png";
+
+    // HP Bar
+    public static final String HP_BAR3 = "heart3.png";
+    public static final String HP_BAR3_1 = "heart3_1.png";
+    public static final String HP_BAR3_2 = "heart3_2.png";
+    public static final String HP_BAR3_3 = "heart3_3.png";
 
     public static final String BALL_ATLAS = "pito_animation_sheet5_1.png";
     public static BufferedImage GetSpriteAtlas(String filename){

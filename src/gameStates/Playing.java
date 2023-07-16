@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 public class Playing extends State implements StateMethods{
     private Timer timer;
@@ -32,11 +33,14 @@ public class Playing extends State implements StateMethods{
     private int lvlTilesHeight = LoadSave.GetLevelData().length;
     private int maxTilesOffsetY = lvlTilesHeight - Game.TILES_IN_HEIGHT;
     private int maxLvlOffsetY = maxTilesOffsetY * Game.TILES_SIZE;
+
+    private BufferedImage backgroundImg;
     public Playing(Game game){
         super(game);
         initClasses();
     }
     private void initClasses() {
+        backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.MENU_BACKGROUND_IMG_PLAYING);
         levelManager = new LevelManager(game);
         enemyManager = new EnemyManager(this);
 //        player = new Player(500, 400, (int) (48 * SCALE), (int) (36 * SCALE));
@@ -90,6 +94,7 @@ public class Playing extends State implements StateMethods{
 
     @Override
     public void draw(Graphics g) {
+        g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
         levelManager.draw(g, xLvlOffset, yLvlOffset);
         player.render(g, xLvlOffset, yLvlOffset);
         enemyManager.draw(g, xLvlOffset, yLvlOffset);
