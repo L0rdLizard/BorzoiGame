@@ -1,21 +1,47 @@
 package entities;
 import main.Game;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+
 import static utilz.Constants.Directions.LEFT;
 import static utilz.Constants.Directions.*;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.HelpMethods.*;
 
 public class Ball extends Enemy{
+    // Attack hitbox
+    public Rectangle2D.Float attackBox;
+    private int attackBoxOffsetX;
     public Ball(float x, float y) {
         super(x, y, BALL_WIDTH, BALL_HEIGHT, BALL);
         initHitbox(x, y, (int)(30 * Game.SCALE), (int)(30 * Game.SCALE));
+        initAttackBox();
+    }
+
+    private void initAttackBox() {
+        attackBox = new Rectangle2D.Float(x, y, (int) (30 * Game.SCALE), (int) (40 * Game.SCALE));
+        attackBoxOffsetX = (int) (Game.SCALE * 10);
     }
 
     public void update(int[][] lvlData, Player player){
         updateMove(lvlData, player);
         updateAnimationTick();
+        updateAttackBox();
     }
+
+    private void updateAttackBox() {
+        if (walkDir == RIGHT){
+            attackBox.x = hitbox.x + hitbox.width + (int) (Game.SCALE * 5);
+        } else if (walkDir == LEFT){
+            attackBox.x = hitbox.x - hitbox.width - (int) (Game.SCALE * 5);
+        }
+        attackBox.y = hitbox.y - (Game.SCALE * 10);
+//        attackBox.x = hitbox.x;
+//        attackBox.y = hitbox.y;
+    }
+
+
 
     public void updateMove(int[][] lvlData, Player player){
         if (firstUpdate){
@@ -42,7 +68,7 @@ public class Ball extends Enemy{
     }
     public int flipX(){
         if (walkDir == RIGHT)
-            return width;
+            return width + 44;
         else
             return 0;
     }

@@ -42,6 +42,13 @@ public class EnemyManager {
                     (int) (b.getHitbox().x) - xLvlOffset - BALL_DRAWOFFSET_X + b.flipX(),
                     (int) (b.getHitbox().y) - yLvlOffset - BALL_DRAWOFFSET_Y,
                     BALL_WIDTH * b.flipW(), BALL_HEIGHT, null);
+            drawAttackBox(g, xLvlOffset, yLvlOffset);
+        }
+    }
+    private void drawAttackBox(Graphics g, int lvlOffset, int yLvlOffset) {
+        for (Ball b : balls) {
+            g.setColor(Color.black);
+            g.drawRect((int) b.attackBox.x - lvlOffset, (int) b.attackBox.y - yLvlOffset, (int) b.attackBox.width, (int) b.attackBox.height);
         }
     }
 
