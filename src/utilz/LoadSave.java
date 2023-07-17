@@ -19,7 +19,7 @@ public class LoadSave {
     public static final String MENU_BACKGROUND = "menu_background.png";
     public static final String MENU_BACKGROUND_IMG = "dark.png";
     public static final String MENU_BACKGROUND_IMG_PLAYING = "dark.png";
-
+    public static final String URM_BUTTONS = "urm_buttons.png";
     // HP Bar
     public static final String HP_BAR3 = "heart3.png";
     public static final String HP_BAR3_1 = "heart3_1.png";

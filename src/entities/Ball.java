@@ -58,10 +58,11 @@ public class Ball extends Enemy{
                     newState(RUNNING);
                     break;
                 case RUNNING:
-                    if(canSeePlayer(lvlData, player))
+                    if(canSeePlayer(lvlData, player)) {
                         turnTowardsPlayer(player);
-                    if(isPlayerCloseToAttack(player) && ( Math.abs(hitbox.y - player.hitbox.y) <= Game.TILES_SIZE))
-                        newState(ATTACK);
+                        if (isPlayerCloseToAttack(player) )
+                            newState(ATTACK);
+                    }
 
                     move(lvlData);
                     break;
