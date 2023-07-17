@@ -1,6 +1,7 @@
 package gameStates;
 
 import UI.GameOverOverlay;
+import UI.LevelCompletedOverlay;
 import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
@@ -9,8 +10,6 @@ import utilz.LoadSave;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -22,6 +21,7 @@ public class Playing extends State implements StateMethods{
     private LevelManager levelManager;
     private EnemyManager enemyManager;
     private GameOverOverlay gameOverOverlay;
+    private LevelCompletedOverlay levelCompletedOverlay;
 
     private int xLvlOffset;
     private int leftBorder = (int)(0.5 * Game.GAME_WIDTH);
@@ -37,7 +37,8 @@ public class Playing extends State implements StateMethods{
     private int maxTilesOffsetY = lvlTilesHeight - Game.TILES_IN_HEIGHT;
     private int maxLvlOffsetY = maxTilesOffsetY * Game.TILES_SIZE;
 
-    private boolean gameOver = false;
+    private boolean gameOver;
+    private boolean lvlCompleted = true;
 
     private BufferedImage backgroundImg;
     public Playing(Game game){
@@ -53,16 +54,21 @@ public class Playing extends State implements StateMethods{
         player = new Player(200, 300, (int) (80 * Game.SCALE), (int) (64 * Game.SCALE), this);
         player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
         gameOverOverlay = new GameOverOverlay(this);
+        levelCompletedOverlay = new LevelCompletedOverlay(this);
     }
 
     @Override
     public void update() {
-        if (!gameOver) {
+//        if (paused) {
+//            pauseOverlay.update();
+//        } else
+         if (lvlCompleted) {
+            levelCompletedOverlay.update();
+        } else if (!gameOver) {
             levelManager.update();
             player.update();
             enemyManager.update(levelManager.getCurrentLevel().getLvlData(), player);
             checkCloseToBorder();
-            checkCloseToRoof();
         }
     }
 
@@ -108,6 +114,8 @@ public class Playing extends State implements StateMethods{
         enemyManager.draw(g, xLvlOffset, yLvlOffset);
         if (gameOver){
             gameOverOverlay.draw(g);
+        } else if (lvlCompleted){
+            levelCompletedOverlay.draw(g);
         }
     }
 
@@ -136,17 +144,26 @@ public class Playing extends State implements StateMethods{
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        if (!gameOver) {
+            if (lvlCompleted)
+                levelCompletedOverlay.mousePressed(e);
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        if (!gameOver) {
+            if (lvlCompleted)
+                levelCompletedOverlay.mouseReleased(e);
+        }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        if (!gameOver) {
+            if (lvlCompleted)
+                levelCompletedOverlay.mouseMoved(e);
+        }
     }
 
     @Override
