@@ -2,6 +2,8 @@ package levels;
 
 import entities.Ball;
 import main.Game;
+import objects.Coin;
+import utilz.HelpMethods;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,10 +12,12 @@ import java.util.ArrayList;
 import static utilz.HelpMethods.GetLevelData;
 import static utilz.HelpMethods.GetBalls;
 import static utilz.HelpMethods.GetPlayerSpawn;
+import static utilz.HelpMethods.GetCoins;
 public class Level {
     private BufferedImage img;
     private int[][] lvlData;
     private ArrayList<Ball> balls;
+    private ArrayList<Coin> coins;
 
     // X offset
     private int lvlTilesWidth;
@@ -32,6 +36,9 @@ public class Level {
         createEnemies();
         calcLvlOffsets();
         calcPlayerSpawn();
+    }
+    private void createCoins() {
+        coins = HelpMethods.GetCoins(img);
     }
 
     private void calcPlayerSpawn() {
@@ -84,5 +91,8 @@ public class Level {
     }
     public Point getPlayerSpawn(){
         return playerSpawn;
+    }
+    public ArrayList<Coin> getCoins() {
+        return coins;
     }
 }

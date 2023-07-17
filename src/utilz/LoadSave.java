@@ -25,6 +25,7 @@ public class LoadSave {
     public static final String MENU_BACKGROUND_IMG_PLAYING = "dark.png";
     public static final String URM_BUTTONS = "urm_buttons.png";
     public static final String COMPLETED_IMG = "completed_sprite.png";
+    public static final String COIN_ATLAS = "coins.png";
 
 
     // HP Bar
