@@ -3,12 +3,13 @@ package levels;
 import entities.Ball;
 import main.Game;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static utilz.HelpMethods.GetLevelData;
 import static utilz.HelpMethods.GetBalls;
-
+import static utilz.HelpMethods.GetPlayerSpawn;
 public class Level {
     private BufferedImage img;
     private int[][] lvlData;
@@ -23,12 +24,18 @@ public class Level {
     private int lvlTilesHeight;
     private int maxTilesOffsetY;
     private int maxLvlOffsetY;
+    private Point playerSpawn;
 
     public Level(BufferedImage img){
         this.img = img;
         createLevelData();
         createEnemies();
         calcLvlOffsets();
+        calcPlayerSpawn();
+    }
+
+    private void calcPlayerSpawn() {
+        playerSpawn = GetPlayerSpawn(img);
     }
 
     private void calcLvlOffsets() {
@@ -74,5 +81,8 @@ public class Level {
 
     public ArrayList<Ball> getBalls(){
         return balls;
+    }
+    public Point getPlayerSpawn(){
+        return playerSpawn;
     }
 }
