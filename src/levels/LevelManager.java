@@ -53,14 +53,14 @@ public class LevelManager {
     }
 
 
-public void  draw(Graphics g, int lvlOffset, int yLvlOffset){
-    for (int j = 0; j < levels.get(lvlIndex).getLvlData().length; j++){
-        for (int i = 0; i < levels.get(lvlIndex).getLvlData()[0].length; i++){
-            int index = levels.get(lvlIndex).getSpriteIndex(i, j);
-            g.drawImage(levelSprite[index], Game.TILES_SIZE * i - lvlOffset, Game.TILES_SIZE * j - yLvlOffset, Game.TILES_SIZE, Game.TILES_SIZE, null);
+    public void  draw(Graphics g, int xLvlOffset, int yLvlOffset){
+        for (int j = 0; j < levels.get(lvlIndex).getLvlData().length; j++){
+            for (int i = 0; i < levels.get(lvlIndex).getLvlData()[0].length; i++){
+                int index = levels.get(lvlIndex).getSpriteIndex(i, j);
+                g.drawImage(levelSprite[index], Game.TILES_SIZE * i - xLvlOffset, Game.TILES_SIZE * j - yLvlOffset, Game.TILES_SIZE, Game.TILES_SIZE, null);
+            }
         }
     }
-}
 
     public void update(){
 

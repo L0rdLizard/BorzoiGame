@@ -17,7 +17,7 @@ import java.io.File;
 public class LoadSave {
     public static final String PLAYER_ATLAS = "pito_animation_sheet5_1.png";
     public static final String LEVEL_ATLAS = "outside_sprites.png";
-//    public static final String MY_MAP = "myMap_enemy.png";
+//    public static final String MY_MAP = "2.png";
     public static final String MENU_BUTTONS = "button_atlas.png";
     public static final String MENU_BACKGROUND = "menu_background.png";
     public static final String MENU_BACKGROUND_IMG = "dark.png";

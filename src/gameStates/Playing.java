@@ -56,6 +56,7 @@ public class Playing extends State implements StateMethods{
 
     private void calcLvlOffset() {
         maxLvlOffsetX = levelManager.getCurrentLevel().getLvlOffsetX();
+        maxLvlOffsetY = levelManager.getCurrentLevel().getLvlOffsetY();
     }
 
     private void initClasses() {
@@ -81,6 +82,7 @@ public class Playing extends State implements StateMethods{
             player.update();
             enemyManager.update(levelManager.getCurrentLevel().getLvlData(), player);
             checkCloseToBorder();
+            checkCloseToRoof();
         }
     }
 
@@ -223,11 +225,11 @@ public class Playing extends State implements StateMethods{
         this.lvlCompleted = levelCompleted;
     }
 
-    public void setMaxLvlOffsetX(int lvlOffset){
-        this.maxLvlOffsetX = lvlOffset;
+    public void setMaxLvlOffsetX(int lvlOffsetX){
+        this.maxLvlOffsetX = lvlOffsetX;
     }
-    public void setMaxLvlOffsetY(int lvlOffset){
-        this.maxLvlOffsetY = lvlOffset;
+    public void setMaxLvlOffsetY(int lvlOffsetY){
+        this.maxLvlOffsetY = lvlOffsetY;
     }
 
     public void windowFocusLost(){
