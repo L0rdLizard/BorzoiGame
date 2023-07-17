@@ -2,6 +2,7 @@ package main;
 
 import entities.Player;
 
+import gameStates.Editing;
 import gameStates.GameStates;
 import gameStates.Menu;
 import gameStates.Playing;
@@ -32,6 +33,7 @@ public class Game implements Runnable{
 
     private Playing playing;
     private Menu menu;
+    private Editing editing;
 
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static float SCALE = 2f;
@@ -57,6 +59,7 @@ public class Game implements Runnable{
     private void initClasses() {
         menu = new Menu(this);
         playing = new Playing(this);
+        editing = new Editing(this);
     }
 
     private void startGameLoop(){
@@ -75,7 +78,8 @@ public class Game implements Runnable{
                 System.exit(0);
                 break;
             case OPTIONS:
-                System.exit(0);
+//                System.exit(0);
+                editing.update();
                 break;
             default:
                 break;
@@ -88,6 +92,9 @@ public class Game implements Runnable{
                 break;
             case PLAYING:
                 playing.draw(g);
+                break;
+            case OPTIONS:
+                editing.draw(g);
                 break;
             default:
                 break;
@@ -146,5 +153,8 @@ public class Game implements Runnable{
     }
     public Playing getPlaying(){
         return playing;
+    }
+    public Editing getEditing(){
+        return editing;
     }
 }

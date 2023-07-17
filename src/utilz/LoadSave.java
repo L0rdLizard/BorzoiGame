@@ -19,7 +19,8 @@ public class LoadSave {
     public static final String LEVEL_ATLAS = "outside_sprites.png";
 //    public static final String MY_MAP = "2.png";
     public static final String MENU_BUTTONS = "button_atlas.png";
-    public static final String MENU_BACKGROUND = "menu_background.png";
+//    public static final String MENU_BACKGROUND = "menu_background.png";
+    public static final String MENU_BACKGROUND = "menu_menu.png";
     public static final String MENU_BACKGROUND_IMG = "dark.png";
     public static final String MENU_BACKGROUND_IMG_PLAYING = "dark.png";
     public static final String URM_BUTTONS = "urm_buttons.png";
