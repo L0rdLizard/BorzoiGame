@@ -10,11 +10,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.io.File;
 
 public class LoadSave {
     public static final String PLAYER_ATLAS = "pito_animation_sheet5_1.png";
     public static final String LEVEL_ATLAS = "outside_sprites.png";
-    public static final String MY_MAP = "myMap_enemy.png";
+//    public static final String MY_MAP = "myMap_enemy.png";
     public static final String MENU_BUTTONS = "button_atlas.png";
     public static final String MENU_BACKGROUND = "menu_background.png";
     public static final String MENU_BACKGROUND_IMG = "dark.png";
@@ -50,35 +53,36 @@ public class LoadSave {
         return image;
     }
 
-    public static ArrayList<Ball> GetBalls(){
-        BufferedImage lvlImage = GetSpriteAtlas(MY_MAP);
-        ArrayList<Ball> list = new ArrayList<>();
-        for (int j = 0; j < lvlImage.getHeight(); j++){
-            for (int i = 0; i < lvlImage.getWidth(); i++){
-                Color color = new Color(lvlImage.getRGB(i, j));
-                int value = color.getGreen();
-                if (value == BALL)
-                    list.add(new Ball(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
-            }
-        }
-        return list;
-    }
-    public static int[][] GetLevelData(){
-        // TODO
-//        int[][] lvlData = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
+    public static BufferedImage[] GetAllLevels() {
+        URL url = LoadSave.class.getResource("/lvls");
+        File file = null;
 
-        BufferedImage lvlImage = GetSpriteAtlas(MY_MAP);
-        int[][] lvlData = new int[lvlImage.getHeight()][lvlImage.getWidth()];
-
-        for (int j = 0; j < lvlImage.getHeight(); j++){
-            for (int i = 0; i < lvlImage.getWidth(); i++){
-                Color color = new Color(lvlImage.getRGB(i, j));
-                int value = color.getRed();
-                if (value >= 48)
-                    value = 0;
-                lvlData[j][i] = value;
-            }
+        try {
+            file = new File(url.toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
-        return lvlData;
+
+        File[] files = file.listFiles();
+        File[] filesSorted = new File[files.length];
+
+        for (int i = 0; i < filesSorted.length; i++)
+            for (int j = 0; j < files.length; j++) {
+                if (files[j].getName().equals((i + 1) + ".png"))
+                    filesSorted[i] = files[j];
+
+            }
+
+        BufferedImage[] imgs = new BufferedImage[filesSorted.length];
+
+        for (int i = 0; i < imgs.length; i++)
+            try {
+                imgs[i] = ImageIO.read(filesSorted[i]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        return imgs;
     }
+
 }

@@ -1,10 +1,15 @@
 package utilz;
 
+import entities.Ball;
 import entities.Player;
 import main.Game;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import static utilz.Constants.EnemyConstants.BALL;
 
 public class HelpMethods {
     public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvlData){
@@ -107,5 +112,34 @@ public class HelpMethods {
             return IsAllTileWalkable(secondXTile, firstXTile, yTile, lvlData);
         else
             return IsAllTileWalkable(firstXTile, secondXTile, yTile, lvlData);
+    }
+
+    public static int[][] GetLevelData(BufferedImage lvlImage){
+        // TODO
+        int[][] lvlData = new int[lvlImage.getHeight()][lvlImage.getWidth()];
+
+        for (int j = 0; j < lvlImage.getHeight(); j++){
+            for (int i = 0; i < lvlImage.getWidth(); i++){
+                Color color = new Color(lvlImage.getRGB(i, j));
+                int value = color.getRed();
+                if (value >= 48)
+                    value = 0;
+                lvlData[j][i] = value;
+            }
+        }
+        return lvlData;
+    }
+
+    public static ArrayList<Ball> GetBalls(BufferedImage lvlImage){
+        ArrayList<Ball> list = new ArrayList<>();
+        for (int j = 0; j < lvlImage.getHeight(); j++){
+            for (int i = 0; i < lvlImage.getWidth(); i++){
+                Color color = new Color(lvlImage.getRGB(i, j));
+                int value = color.getGreen();
+                if (value == BALL)
+                    list.add(new Ball(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
+            }
+        }
+        return list;
     }
 }

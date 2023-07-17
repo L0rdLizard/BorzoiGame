@@ -1,6 +1,7 @@
 package entities;
 
 import gameStates.Playing;
+import levels.Level;
 import main.Game;
 import utilz.LoadSave;
 
@@ -21,19 +22,22 @@ public class EnemyManager {
     public EnemyManager(Playing playing){
         this.playing = playing;
         loadEnemyImages();
-        addEnemies();
     }
 
-    private void addEnemies() {
-        balls = LoadSave.GetBalls();
-        System.out.println("size of ball: " + balls.size());
+    public void loadEnemies(Level level) {
+        balls = level.getBalls();
+//        System.out.println("size of ball: " + balls.size());
     }
 
     public void update(int[][] lvlData, Player player){
+        boolean isAnyActive = false;
         for (Ball b : balls)
             if(b.isActive()) {
                 b.update(lvlData, player);
+                isAnyActive = true;
             }
+        if (!isAnyActive)
+            playing.setLevelCompleted(true);
     }
     public void draw(Graphics g, int xLvlOffset, int yLvlOffset){
         drawBall(g, xLvlOffset, yLvlOffset);

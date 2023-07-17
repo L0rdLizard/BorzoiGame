@@ -16,7 +16,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Playing extends State implements StateMethods{
-    private Timer timer;
     private Player player;
     private LevelManager levelManager;
     private EnemyManager enemyManager;
@@ -26,27 +25,40 @@ public class Playing extends State implements StateMethods{
     private int xLvlOffset;
     private int leftBorder = (int)(0.5 * Game.GAME_WIDTH);
     private int rightBorder = (int)(0.5 * Game.GAME_WIDTH);
-    private int lvlTilesWidth = LoadSave.GetLevelData()[0].length;
-    private int maxTilesOffsetX = lvlTilesWidth - Game.TILES_IN_WIDTH;
-    private int maxLvlOffsetX = maxTilesOffsetX * Game.TILES_SIZE;
+    private int maxLvlOffsetX;
 
     private int yLvlOffset;
     private int upBorder = (int)(0.6 * Game.GAME_HEIGHT);
     private int downBorder = (int)(0.4 * Game.GAME_HEIGHT);
-    private int lvlTilesHeight = LoadSave.GetLevelData().length;
-    private int maxTilesOffsetY = lvlTilesHeight - Game.TILES_IN_HEIGHT;
-    private int maxLvlOffsetY = maxTilesOffsetY * Game.TILES_SIZE;
+    private int maxLvlOffsetY;
 
     private boolean gameOver;
-    private boolean lvlCompleted = true;
+    private boolean lvlCompleted = false;
 
     private BufferedImage backgroundImg;
     public Playing(Game game){
         super(game);
         initClasses();
-    }
-    private void initClasses() {
+
         backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.MENU_BACKGROUND_IMG_PLAYING);
+
+        calcLvlOffset();
+        loadStartLevel();
+    }
+
+    public void loadNextLevel(){
+        resetAll();
+        levelManager.loadNextLevel();
+    }
+    private void loadStartLevel() {
+        enemyManager.loadEnemies(levelManager.getCurrentLevel());
+    }
+
+    private void calcLvlOffset() {
+        maxLvlOffsetX = levelManager.getCurrentLevel().getLvlOffsetX();
+    }
+
+    private void initClasses() {
         levelManager = new LevelManager(game);
         enemyManager = new EnemyManager(this);
 //        player = new Player(500, 400, (int) (48 * SCALE), (int) (36 * SCALE));
@@ -122,6 +134,7 @@ public class Playing extends State implements StateMethods{
     public void resetAll() {
         gameOver = false;
 //        paused = false;
+        lvlCompleted = false;
         player.resetAll();
         enemyManager.resetAllEnemies();
     }
@@ -206,11 +219,25 @@ public class Playing extends State implements StateMethods{
         }
     }
 
+    public void setLevelCompleted(boolean levelCompleted){
+        this.lvlCompleted = levelCompleted;
+    }
+
+    public void setMaxLvlOffsetX(int lvlOffset){
+        this.maxLvlOffsetX = lvlOffset;
+    }
+    public void setMaxLvlOffsetY(int lvlOffset){
+        this.maxLvlOffsetY = lvlOffset;
+    }
+
     public void windowFocusLost(){
         player.resetDirBooleans();
     }
     public Player getPlayer(){
         return player;
+    }
+    public EnemyManager getEnemyManager(){
+        return enemyManager;
     }
 
 }
