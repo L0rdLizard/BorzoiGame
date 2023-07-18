@@ -13,6 +13,7 @@ public class Ball extends Enemy{
     // Attack hitbox
     public Rectangle2D.Float attackBox;
     private int attackBoxOffsetX;
+    public boolean CanDropCoin = true;
     public Ball(float x, float y) {
         super(x, y, BALL_WIDTH, BALL_HEIGHT, BALL);
         initHitbox(x, y, (int)(30 * Game.SCALE), (int)(30 * Game.SCALE));
@@ -75,10 +76,19 @@ public class Ball extends Enemy{
                     break;
                 case HIT:
                     break;
+                case DEAD:
+                    break;
+//                    if (CanDropCoin) {
+//                        CanDropCoin = false;
+//                        createCoin();
+//                    }
             }
         }
     }
 
+//    public void createCoin(){
+//
+//    }
 
 
     public int flipX(){
@@ -93,5 +103,13 @@ public class Ball extends Enemy{
             return -1;
         else
             return 1;
+    }
+
+    public boolean isCanDropCoin() {
+        return CanDropCoin;
+    }
+
+    public void setCanDropCoin(boolean isCan){
+        CanDropCoin = isCan;
     }
 }

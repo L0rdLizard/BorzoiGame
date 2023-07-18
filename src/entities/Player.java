@@ -89,6 +89,10 @@ public class Player extends Entity{
         setAnimation();
     }
 
+    private void checkCoinTouched() {
+        playing.checkCoinTouched(hitbox);
+    }
+
     private void checkAttack() {
         if (attackChecked || animIndex != 1)
             return;

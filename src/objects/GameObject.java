@@ -41,13 +41,13 @@ public class GameObject {
     public void reset() {
         aniIndex = 0;
         aniTick = 0;
-        active = true;
+        active = false;
 
 //        if (objType == BARREL || objType == BOX)
 //            doAnimation = false;
 //        else
 //            doAnimation = true;
-        doAnimation = true;
+        doAnimation = false;
     }
 
     protected void initHitbox(int width, int height) {

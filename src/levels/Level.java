@@ -34,6 +34,7 @@ public class Level {
         this.img = img;
         createLevelData();
         createEnemies();
+        createCoins();
         calcLvlOffsets();
         calcPlayerSpawn();
     }

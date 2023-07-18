@@ -6,6 +6,7 @@ import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
+import objects.ObjectManager;
 import utilz.LoadSave;
 
 import javax.swing.*;
@@ -19,6 +20,7 @@ public class Playing extends State implements StateMethods{
     private Player player;
     private LevelManager levelManager;
     private EnemyManager enemyManager;
+    private ObjectManager objectManager;
     private GameOverOverlay gameOverOverlay;
     private LevelCompletedOverlay levelCompletedOverlay;
 
@@ -63,6 +65,7 @@ public class Playing extends State implements StateMethods{
     private void initClasses() {
         levelManager = new LevelManager(game);
         enemyManager = new EnemyManager(this);
+        objectManager = new ObjectManager(this);
 //        player = new Player(500, 400, (int) (48 * SCALE), (int) (36 * SCALE));
 //        player = new Player(200, 300, (int) (64 * Game.SCALE), (int) (48 * Game.SCALE));
         player = new Player(200, 300, (int) (80 * Game.SCALE), (int) (64 * Game.SCALE), this);
@@ -82,6 +85,7 @@ public class Playing extends State implements StateMethods{
             levelCompletedOverlay.update();
         } else if (!gameOver) {
             levelManager.update();
+            objectManager.update();
             player.update();
             enemyManager.update(levelManager.getCurrentLevel().getLvlData(), player);
             checkCloseToBorder();
@@ -129,11 +133,16 @@ public class Playing extends State implements StateMethods{
         levelManager.draw(g, xLvlOffset, yLvlOffset);
         player.render(g, xLvlOffset, yLvlOffset);
         enemyManager.draw(g, xLvlOffset, yLvlOffset);
+        objectManager.draw(g, xLvlOffset, yLvlOffset);
         if (gameOver){
             gameOverOverlay.draw(g);
         } else if (lvlCompleted){
             levelCompletedOverlay.draw(g);
         }
+    }
+
+    public void createCoin(int x, int y, int type){
+        objectManager.addCoin(x, y, type);
     }
 
     public void resetAll() {
@@ -142,6 +151,7 @@ public class Playing extends State implements StateMethods{
         lvlCompleted = false;
         player.resetAll();
         enemyManager.resetAllEnemies();
+        objectManager.resetAllObjects();
     }
     public void setGameOver(boolean gameOver){
         this.gameOver = gameOver;
@@ -149,6 +159,9 @@ public class Playing extends State implements StateMethods{
 
     public void checkEnemyHit(Rectangle2D.Float attackBox){
         enemyManager.checkEnemyHit(attackBox);
+    }
+    public void checkCoinTouched(Rectangle2D.Float hitbox) {
+        objectManager.checkObjectTouched(hitbox);
     }
 
     @Override
@@ -243,6 +256,12 @@ public class Playing extends State implements StateMethods{
     }
     public EnemyManager getEnemyManager(){
         return enemyManager;
+    }
+    public ObjectManager getObjectManager() {
+        return objectManager;
+    }
+    public LevelManager getLevelManager(){
+        return levelManager;
     }
 
 }

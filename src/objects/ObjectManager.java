@@ -21,6 +21,9 @@ public class ObjectManager {
     public ObjectManager(Playing playing) {
         this.playing = playing;
         loadImgs();
+
+        coins = new ArrayList<>();
+        coins.add(new Coin(200, 200, COIN));
     }
 
     public void checkObjectTouched(Rectangle2D.Float hitbox) {
@@ -41,6 +44,10 @@ public class ObjectManager {
 //            playing.getPlayer().changePower(BLUE_POTION_VALUE);
     }
 
+    public void addCoin(int x, int y, int type){
+        coins.add(new Coin(x, y, type));
+    }
+
 //    public void checkObjectHit(Rectangle2D.Float attackbox) {
 //        for (GameContainer gc : containers)
 //            if (gc.isActive()) {
@@ -58,12 +65,13 @@ public class ObjectManager {
     public void loadObjects(Level newLevel) {
 //        potions = newLevel.getPotions();
 //        containers = newLevel.getContainers();
-        coins = newLevel.getCoins();
+//        coins = newLevel.getCoins();
+        coins = new ArrayList<>(newLevel.getCoins());
     }
 
     private void loadImgs() {
         BufferedImage coinSprite = LoadSave.GetSpriteAtlas(LoadSave.COIN_ATLAS);
-        coinImgs = new BufferedImage[2][7];
+        coinImgs = new BufferedImage[1][4];
 
         for (int j = 0; j < coinImgs.length; j++)
             for (int i = 0; i < coinImgs[j].length; i++)
@@ -98,13 +106,13 @@ public class ObjectManager {
                 c.update();
     }
 
-    public void draw(Graphics g, int xLvlOffset) {
+    public void draw(Graphics g, int xLvlOffset, int yLvlOffset) {
 //        drawPotions(g, xLvlOffset);
 //        drawContainers(g, xLvlOffset);
-        drawCoins(g, xLvlOffset);
+        drawCoins(g, xLvlOffset,  yLvlOffset);
     }
 
-    private void drawCoins(Graphics g, int xLvlOffset) {
+    private void drawCoins(Graphics g, int xLvlOffset, int yLvlOffset) {
         for (Coin c : coins)
             if (c.isActive()) {
                 int type = 0;
@@ -112,13 +120,15 @@ public class ObjectManager {
                     type = 1;
                 if (c.getObjType() == COIN3)
                     type = 2;
-                g.drawImage(coinImgs[type][c.getAniIndex()], (int) (c.getHitbox().x - c.getxDrawOffset() - xLvlOffset), (int) (c.getHitbox().y - c.getyDrawOffset()), COIN_WIDTH,
-                        COIN_HEIGHT, null);
+                type = 0;
+                g.drawImage(coinImgs[type][c.getAniIndex()], (int) (c.getHitbox().x - c.getxDrawOffset() - xLvlOffset), (int) (c.getHitbox().y - c.getyDrawOffset() -  yLvlOffset), COIN_WIDTH * 2,
+                        COIN_HEIGHT * 2, null);
             }
     }
 
 
     public void resetAllObjects() {
+        loadObjects(playing.getLevelManager().getCurrentLevel());
 //        for (Potion p : potions)
 //            p.reset();
 //

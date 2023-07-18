@@ -35,6 +35,9 @@ public class EnemyManager {
             if(b.isActive()) {
                 b.update(lvlData, player);
                 isAnyActive = true;
+            } else if (b.isCanDropCoin()) {
+                b.setCanDropCoin(false);
+                playing.createCoin((int) b.getHitbox().x, (int) b.getHitbox().y, b.enemyType);
             }
         if (!isAnyActive)
             playing.setLevelCompleted(true);

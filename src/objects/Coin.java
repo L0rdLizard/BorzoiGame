@@ -11,7 +11,7 @@ public class Coin extends GameObject {
         super(x, y, objType);
         doAnimation = true;
 
-        initHitbox(7, 14);
+        initHitbox(10, 12);
 
         xDrawOffset = (int) (3 * Game.SCALE);
         yDrawOffset = (int) (2 * Game.SCALE);

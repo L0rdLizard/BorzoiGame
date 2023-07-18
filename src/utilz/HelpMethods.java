@@ -152,7 +152,6 @@ public class HelpMethods {
                 int value = color.getBlue();
                 list.add(new Coin(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
             }
-
         return list;
     }
 
