@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import entities.Player;
 import gameStates.Playing;
 import levels.Level;
 import utilz.LoadSave;
@@ -14,19 +15,29 @@ public class ObjectManager {
 
     private Playing playing;
     private BufferedImage[][] coinImgs;
-//    private ArrayList<Potion> potions;
-//    private ArrayList<GameContainer> containers;
+    private BufferedImage spikeImg;
     private ArrayList<Coin> coins;
+    private ArrayList<Spike> spikes;
 
     public ObjectManager(Playing playing) {
         this.playing = playing;
         loadImgs();
 
         coins = new ArrayList<>();
-        coins.add(new Coin(200, 200, COIN));
+//        coins.add(new Coin(200, 200, COIN));
+    }
+
+    public void checkSpikesTouched(Player p) {
+        if (spikes == null)
+            return;
+        for (Spike s : spikes)
+            if (s.getHitbox().intersects(p.getHitbox()))
+                p.kill();
     }
 
     public void checkObjectTouched(Rectangle2D.Float hitbox) {
+//        if (coins == null)
+//            return;
         for (Coin c : coins)
             if (c.isActive()) {
                 if (hitbox.intersects(c.getHitbox())) {
@@ -67,6 +78,7 @@ public class ObjectManager {
 //        containers = newLevel.getContainers();
 //        coins = newLevel.getCoins();
         coins = new ArrayList<>(newLevel.getCoins());
+        spikes = newLevel.getSpikes();
     }
 
     private void loadImgs() {
@@ -76,6 +88,8 @@ public class ObjectManager {
         for (int j = 0; j < coinImgs.length; j++)
             for (int i = 0; i < coinImgs[j].length; i++)
                 coinImgs[j][i] = coinSprite.getSubimage(16 * i, 16 * j, 16, 16);
+
+        spikeImg = LoadSave.GetSpriteAtlas(LoadSave.SPIKES);
 
 //        BufferedImage potionSprite = LoadSave.GetSpriteAtlas(LoadSave.POTION_ATLAS);
 //        potionImgs = new BufferedImage[2][7];
@@ -100,7 +114,8 @@ public class ObjectManager {
 //        for (GameContainer gc : containers)
 //            if (gc.isActive())
 //                gc.update();
-
+//        if (coins == null)
+//            return;
         for (Coin c : coins)
             if (c.isActive())
                 c.update();
@@ -110,9 +125,20 @@ public class ObjectManager {
 //        drawPotions(g, xLvlOffset);
 //        drawContainers(g, xLvlOffset);
         drawCoins(g, xLvlOffset,  yLvlOffset);
+        drawTraps(g, xLvlOffset, yLvlOffset);
+    }
+
+    private void drawTraps(Graphics g, int xLvlOffset, int yLvlOffset) {
+        if (spikes == null)
+            return;
+        for (Spike s : spikes)
+            g.drawImage(spikeImg, (int) (s.getHitbox().x - xLvlOffset), (int) (s.getHitbox().y - s.getyDrawOffset() - yLvlOffset), SPIKE_WIDTH, SPIKE_HEIGHT, null);
+
     }
 
     private void drawCoins(Graphics g, int xLvlOffset, int yLvlOffset) {
+//        if (coins == null)
+//            return;
         for (Coin c : coins)
             if (c.isActive()) {
                 int type = 0;

@@ -73,20 +73,31 @@ public class Player extends Entity{
         attackBox = new Rectangle2D.Float(x, y, (int)(30 * Game.SCALE), (int)(40 * Game.SCALE));
     }
 
-    public void update(){
+    public void update() {
         updateHealthBar();
-        if (currentHealth <= 0){
 
+        if (currentHealth <= 0) {
             playing.setGameOver(true);
             return;
         }
+
         updateAttackBox();
 
         updatePos();
+        if (moving) {
+            checkCoinTouched();
+            checkSpikesTouched();
+        }
         if (attacking)
             checkAttack();
+
         updateAnimationTick();
         setAnimation();
+    }
+
+    private void checkSpikesTouched() {
+        playing.checkSpikesTouched(this);
+
     }
 
     private void checkCoinTouched() {
@@ -260,6 +271,9 @@ public class Player extends Entity{
         airSpeed = jumpSpeed;
     }
 
+    public void kill() {
+        currentHealth = 0;
+    }
     private void resetInAir() {
         inAir = false;
         airSpeed = 0;

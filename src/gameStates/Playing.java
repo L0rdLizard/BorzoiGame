@@ -9,7 +9,6 @@ import main.Game;
 import objects.ObjectManager;
 import utilz.LoadSave;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -162,6 +161,9 @@ public class Playing extends State implements StateMethods{
     }
     public void checkCoinTouched(Rectangle2D.Float hitbox) {
         objectManager.checkObjectTouched(hitbox);
+    }
+    public void checkSpikesTouched(Player p) {
+        objectManager.checkSpikesTouched(p);
     }
 
     @Override

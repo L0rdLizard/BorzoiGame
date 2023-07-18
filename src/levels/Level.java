@@ -3,6 +3,7 @@ package levels;
 import entities.Ball;
 import main.Game;
 import objects.Coin;
+import objects.Spike;
 import utilz.HelpMethods;
 
 import java.awt.*;
@@ -18,6 +19,7 @@ public class Level {
     private int[][] lvlData;
     private ArrayList<Ball> balls;
     private ArrayList<Coin> coins;
+    private ArrayList<Spike> spikes;
 
     // X offset
     private int lvlTilesWidth;
@@ -34,10 +36,16 @@ public class Level {
         this.img = img;
         createLevelData();
         createEnemies();
+        createSpikes();
         createCoins();
         calcLvlOffsets();
         calcPlayerSpawn();
     }
+
+    private void createSpikes() {
+        spikes = HelpMethods.GetSpikes(img);
+    }
+
     private void createCoins() {
         coins = HelpMethods.GetCoins(img);
     }
@@ -95,5 +103,8 @@ public class Level {
     }
     public ArrayList<Coin> getCoins() {
         return coins;
+    }
+    public ArrayList<Spike> getSpikes() {
+        return spikes;
     }
 }

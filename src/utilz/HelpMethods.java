@@ -4,6 +4,7 @@ import entities.Ball;
 import entities.Player;
 import main.Game;
 import objects.Coin;
+import objects.Spike;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -11,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static utilz.Constants.EnemyConstants.BALL;
+import static utilz.Constants.ObjectConstants.SPIKE;
 
 public class HelpMethods {
     public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvlData){
@@ -167,4 +169,17 @@ public class HelpMethods {
         return new Point(3 * Game.TILES_SIZE, 3 * Game.TILES_SIZE);
     }
 
+    public static ArrayList<Spike> GetSpikes(BufferedImage img) {
+        ArrayList<Spike> list = new ArrayList<>();
+
+        for (int j = 0; j < img.getHeight(); j++)
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getBlue();
+                if (value == SPIKE)
+                    list.add(new Spike(i * Game.TILES_SIZE, j * Game.TILES_SIZE, SPIKE));
+            }
+
+        return list;
+    }
 }

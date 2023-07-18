@@ -26,6 +26,7 @@ public class LoadSave {
     public static final String URM_BUTTONS = "urm_buttons.png";
     public static final String COMPLETED_IMG = "completed_sprite.png";
     public static final String COIN_ATLAS = "coins.png";
+    public static final String SPIKES = "spikes.png";
 
 
     // HP Bar
