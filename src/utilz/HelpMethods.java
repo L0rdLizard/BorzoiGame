@@ -146,6 +146,18 @@ public class HelpMethods {
         return list;
     }
 
+    public static ArrayList<Ball> GetBalls(int[][] lvlData){
+        ArrayList<Ball> list = new ArrayList<>();
+        for (int j = 0; j < lvlData.length; j++){
+            for (int i = 0; i < lvlData[0].length; i++){
+                int value = lvlData[i][j];
+                if (value == BALL)
+                    list.add(new Ball(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
+            }
+        }
+        return list;
+    }
+
     public static ArrayList<Coin> GetCoins(BufferedImage img) {
         ArrayList<Coin> list = new ArrayList<>();
         for (int j = 0; j < img.getHeight(); j++)

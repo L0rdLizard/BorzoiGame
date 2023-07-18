@@ -35,9 +35,11 @@ public class LevelManager {
     }
 
     private void buildAllLevels() {
+        int index = 0;
         BufferedImage[] allLevel = LoadSave.GetAllLevels();
         for (BufferedImage img : allLevel){
-            levels.add(new Level(img));
+            levels.add(new Level(img, index));
+            index++;
         }
     }
 
@@ -71,5 +73,8 @@ public class LevelManager {
 
     public int getAmountOfLevels(){
         return levels.size();
+    }
+    public ArrayList<Level> getLevels(){
+        return levels;
     }
 }

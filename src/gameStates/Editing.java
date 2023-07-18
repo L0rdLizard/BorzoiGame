@@ -15,15 +15,15 @@ import java.util.ArrayList;
 public class Editing extends State implements StateMethods{
 
     private MenuButton[] editButtons = new MenuButton[6];
-    private int[][] grid = new int[50][Game.TILES_IN_HEIGHT];
     private int[][] lvlData;
     private BufferedImage[] levelSprite;
     private ArrayList<Level> levels;
-    private int lvlIndex = 2;
+    private int lvlIndex = 0;
     public Editing(Game game) {
         super(game);
         levels = new ArrayList<>();
-        buildAllLevels();
+//        buildAllLevels();
+        getAllLvlData();
         importOutsideSprite();
     }
 
@@ -36,15 +36,20 @@ public class Editing extends State implements StateMethods{
     public void draw(Graphics g) {
         drawMiniLevel(g);
         drawGrid(g);
+        drawPanels(g);
 //        g.setColor(Color.darkGray);
 //        g.drawLine(64, 0, 64, (Game.TILES_IN_HEIGHT * Game.TILES_SIZE));
     }
 
-    private void buildAllLevels() {
-        BufferedImage[] allLevel = LoadSave.GetAllLevels();
-        for (BufferedImage img : allLevel){
-            levels.add(new Level(img));
-        }
+//    private void buildAllLevels() {
+//        BufferedImage[] allLevel = LoadSave.GetAllLevels();
+//        for (BufferedImage img : allLevel){
+//            levels.add(new Level(img));
+//        }
+//    }
+
+    private void getAllLvlData(){
+        levels = game.getPlaying().getLevelManager().getLevels();
     }
     private void importOutsideSprite() {
         BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.LEVEL_ATLAS);
@@ -68,12 +73,36 @@ public class Editing extends State implements StateMethods{
 
     public void drawGrid(Graphics g){
         g.setColor(Color.darkGray);
-        for (int i = 32; i <= (Game.TILES_IN_WIDTH * Game.TILES_SIZE); i+=32){
-            g.drawLine(i, 0, i, (Game.TILES_IN_HEIGHT * Game.TILES_SIZE));
+        for (int i = 192; i <= 1760; i+=32){
+            g.drawLine(i, 160, i,800);
         }
-        for (int i = 32; i <= (Game.TILES_IN_HEIGHT * Game.TILES_SIZE); i+=32){
-            g.drawLine(0, i, (Game.TILES_IN_WIDTH * Game.TILES_SIZE), i);
+        //(Game.TILES_IN_WIDTH * Game.TILES_SIZE)
+        //(Game.TILES_IN_HEIGHT * Game.TILES_SIZE)
+        for (int i = 192; i <= 800; i+=32){
+            g.drawLine(160, i, 1760, i);
         }
+        g.setColor(Color.RED);
+        g.drawLine(160, 160, 1760, 160);
+        g.drawLine(160, 159, 1760, 159);
+
+        g.drawLine(160, 160, 160, 800);
+        g.drawLine(159, 160, 159, 800);
+
+        g.drawLine(160, 800, 1760, 800);
+        g.drawLine(160, 799, 1760, 799);
+
+        g.drawLine(1760, 160, 1760, 800);
+        g.drawLine(1759, 160, 1759, 800);
+    }
+
+    private void drawPanels(Graphics g) {
+        g.setColor(Color.GRAY);
+        g.fillRect(0, 832, 1920, 576);
+
+        g.setColor(Color.BLACK);
+        g.drawLine(0, 833, 1920, 833);
+        g.drawLine(0, 832, 1920, 832);
+        g.drawLine(0, 831, 1920, 831);
     }
 
     @Override

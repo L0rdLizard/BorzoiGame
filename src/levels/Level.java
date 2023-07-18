@@ -9,6 +9,7 @@ import utilz.HelpMethods;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.io.*;
 
 import static utilz.HelpMethods.GetLevelData;
 import static utilz.HelpMethods.GetBalls;
@@ -31,9 +32,11 @@ public class Level {
     private int maxTilesOffsetY;
     private int maxLvlOffsetY;
     private Point playerSpawn;
+    private int lvlIndex;
 
-    public Level(BufferedImage img){
+    public Level(BufferedImage img, int lvlIndex){
         this.img = img;
+        this.lvlIndex = lvlIndex;
         createLevelData();
         createEnemies();
         createSpikes();
@@ -42,13 +45,7 @@ public class Level {
         calcPlayerSpawn();
     }
 
-    private void createSpikes() {
-        spikes = HelpMethods.GetSpikes(img);
-    }
 
-    private void createCoins() {
-        coins = HelpMethods.GetCoins(img);
-    }
 
     private void calcPlayerSpawn() {
         playerSpawn = GetPlayerSpawn(img);
@@ -76,9 +73,57 @@ public class Level {
         balls = GetBalls(img);
     }
 
+    private void createSpikes() {
+        spikes = HelpMethods.GetSpikes(img);
+    }
+
+    private void createCoins() {
+        coins = HelpMethods.GetCoins(img);
+    }
+
     private void createLevelData() {
         lvlData = GetLevelData(img);
+//        lvlData = loadLvlData();
+//        saveLvlData(lvlIndex);
     }
+
+//    private void saveLvlData(int intIndex) {
+//        String index = String.valueOf(intIndex);
+//        try {
+//            FileOutputStream fileOut = new FileOutputStream("res/lvlsBin/levelData" + index + ".bin");
+//            // relative path to full
+//            //FileOutputStream fileOut = new FileOutputStream("C:\\Users\\User\\Desktop\\Java\\Game\\res\\lvlsBin\\levelData.bin");
+//            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//            out.writeObject(lvlData);
+//            out.close();
+//            fileOut.close();
+//            System.out.println("Serialized data is saved in res/lvlsBin/levelData" + index + ".bin");
+//        } catch (IOException i) {
+//            i.printStackTrace();
+//        }
+//    }
+//
+//    private int[][] loadLvlData(){
+//        int[][] lvlData = null;
+//        String index = String.valueOf(lvlIndex);
+//        try {
+//            FileInputStream fileIn = new FileInputStream("res/lvlsBin/levelData" + index + ".bin");
+//            // relative path to full
+//            //FileInputStream fileIn = new FileInputStream("C:\\Users\\User\\Desktop\\Java\\Game\\res\\lvlsBin\\levelData.bin");
+//            ObjectInputStream in = new ObjectInputStream(fileIn);
+//            lvlData = (int[][]) in.readObject();
+//            in.close();
+//            fileIn.close();
+//        } catch (IOException i) {
+//            i.printStackTrace();
+//            return null;
+//        } catch (ClassNotFoundException c) {
+//            System.out.println("lvlData class not found");
+//            c.printStackTrace();
+//            return null;
+//        }
+//        return lvlData;
+//    }
 
     public int getSpriteIndex(int x, int y){
         return lvlData[y][x];
