@@ -16,7 +16,7 @@ public class LevelManager {
     public LevelManager(Game game){
         this.game = game;
         importOutsideSprite();
-        levels = new ArrayList<>();
+
         buildAllLevels();
     }
 
@@ -36,8 +36,18 @@ public class LevelManager {
         game.getPlaying().getObjectManager().loadObjects(newLevel);
     }
 
-    private void buildAllLevels() {
+    public void reloadCurrentLevel() {
+        int lvlIndex = 0;
+        Level newLevel = levels.get(lvlIndex);
+        game.getPlaying().getEnemyManager().loadEnemies(newLevel);
+        game.getPlaying().getPlayer().loadLvlData(newLevel.getLvlData());
+        game.getPlaying().getObjectManager().loadObjects(newLevel);
+    }
+
+    public void buildAllLevels() {
         int index = 0;
+        levels = new ArrayList<>();
+        System.out.println("Building all levels");
         BufferedImage[] allLevel = LoadSave.GetAllLevels();
         for (BufferedImage img : allLevel){
             levels.add(new Level(img));
@@ -61,7 +71,7 @@ public class LevelManager {
         for (int j = 0; j < levels.get(lvlIndex).getLvlData().length; j++){
             for (int i = 0; i < levels.get(lvlIndex).getLvlData()[0].length; i++){
                 int index = levels.get(lvlIndex).getSpriteIndex(i, j);
-                if (index >= 48 )
+                if (index >= 48)
                     index = 0;
                 g.drawImage(levelSprite[index], Game.TILES_SIZE * i - xLvlOffset, Game.TILES_SIZE * j - yLvlOffset, Game.TILES_SIZE, Game.TILES_SIZE, null);
             }

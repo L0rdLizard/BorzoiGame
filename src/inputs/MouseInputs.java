@@ -32,7 +32,6 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
                     firstEdit = false;
                     break;
                 }
-//                System.out.println("Mouse Clicked in mouseInputs");
                 gamePanel.getGame().getEditing().mouseClicked(e);
             default:
                 break;

@@ -56,7 +56,7 @@ public class Game implements Runnable{
 
     }
 
-    private void initClasses() {
+    public void initClasses() {
         menu = new Menu(this);
         playing = new Playing(this);
         editing = new Editing(this);
@@ -163,4 +163,5 @@ public class Game implements Runnable{
     public Editing getEditing(){
         return editing;
     }
+
 }

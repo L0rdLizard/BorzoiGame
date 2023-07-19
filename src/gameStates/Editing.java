@@ -26,7 +26,7 @@ public class Editing extends State implements StateMethods{
     // buttons
     private BufferedImage[] imgs;
 
-    private int lvlIndex = 0;
+    private int lvlIndex = 2;
     public Editing(Game game) {
         super(game);
         getAllLvlData();
@@ -126,7 +126,7 @@ public class Editing extends State implements StateMethods{
 
     private void changePixel(int xTile, int yTile, int[][] lvlData, int index){
         lvlData[yTile][xTile] = index;
-        System.out.println("x = " + yTile + " y = " + xTile);
+//        System.out.println("x = " + yTile + " y = " + xTile);
         saveLvlToFile();
     }
 
@@ -143,7 +143,7 @@ public class Editing extends State implements StateMethods{
     //  g.drawImage(levelSprite[index], (224 + (64*j)), (800 + (64*i)), 32, 32, null);
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("mouseClicked");
+//        System.out.println("mouseClicked");
         int x = e.getX();
         int y = e.getY();
         if (x >= 160 && x <= 1760 && y >= 96 && y <= 736){
@@ -154,7 +154,7 @@ public class Editing extends State implements StateMethods{
 
         if (x >= 224 && x <= 992 && y >= 800 && y <= 1056){
             if ((x - 224) % 64 <= 32 && (y - 800) % 64 <= 32){
-                System.out.println("да");
+//                System.out.println("да");
                 xIndex = (x - 224) / 64;
                 yIndex = (y - 800) / 64;
                 choosenBlock = yIndex * 12 + xIndex;
@@ -186,8 +186,12 @@ public class Editing extends State implements StateMethods{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             GameStates.state = GameStates.MENU;
+            game.getPlaying().getLevelManager().buildAllLevels();
+//            game.getPlaying().getLevelManager().reloadCurrentLevel();
+//            game.initClasses();
+        }
     }
 
     @Override
