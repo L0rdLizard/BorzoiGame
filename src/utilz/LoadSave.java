@@ -25,6 +25,7 @@ public class LoadSave {
     public static final String COMPLETED_IMG = "completed_sprite.png";
     public static final String COIN_ATLAS = "coins.png";
     public static final String SPIKES = "spikes.png";
+    public static final String EDIT_BUTTONS = "editButtons.png";
 
 
     // HP Bar

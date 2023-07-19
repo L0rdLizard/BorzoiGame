@@ -62,7 +62,7 @@ public class LevelManager {
             for (int i = 0; i < levels.get(lvlIndex).getLvlData()[0].length; i++){
                 int index = levels.get(lvlIndex).getSpriteIndex(i, j);
                 if (index >= 48 )
-                    index = 11;
+                    index = 0;
                 g.drawImage(levelSprite[index], Game.TILES_SIZE * i - xLvlOffset, Game.TILES_SIZE * j - yLvlOffset, Game.TILES_SIZE, Game.TILES_SIZE, null);
             }
         }

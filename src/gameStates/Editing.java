@@ -19,7 +19,14 @@ public class Editing extends State implements StateMethods{
     private int[][] lvlData;
     private BufferedImage[] levelSprite;
     BufferedImage[] allLevel = new BufferedImage[4];
-    private int lvlIndex = 3;
+    private int choosenBlock = 0;
+    private int xIndex = 0;
+    private int yIndex = 0;
+
+    // buttons
+    private BufferedImage[] imgs;
+
+    private int lvlIndex = 0;
     public Editing(Game game) {
         super(game);
         getAllLvlData();
@@ -37,6 +44,8 @@ public class Editing extends State implements StateMethods{
         drawMiniLevel(g);
         drawGrid(g);
         drawPanels(g);
+        drawOutsideSprites(g);
+        highlightChoosenBlock(g);
     }
 
     private void getAllLvlData(){
@@ -53,6 +62,15 @@ public class Editing extends State implements StateMethods{
         }
     }
 
+    private void drawOutsideSprites(Graphics g){
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 12; j++){
+                int index = j + i*12;
+                g.drawImage(levelSprite[index], (224 + (64*j)), (800 + (64*i)), 32, 32, null);
+            }
+        }
+    }
+
     private void setCurrentEditingLevel(int lvlIndex){
 //        this.lvlIndex = lvlIndex;
 //        lvlData = levels.get(lvlIndex).getLvlData();
@@ -65,8 +83,8 @@ public class Editing extends State implements StateMethods{
             for (int i = 0; i < lvlData[0].length; i++){
                 int index = lvlData[j][i];
                 if (index >= 48)
-                    index = 11;
-                g.drawImage(levelSprite[index], Game.TILES_SIZE / 2 * i + 160, Game.TILES_SIZE / 2 * j + 160, Game.TILES_SIZE / 2, Game.TILES_SIZE / 2, null);
+                    index = 0;
+                g.drawImage(levelSprite[index], Game.TILES_SIZE / 2 * i + 160, Game.TILES_SIZE / 2 * j + 96, Game.TILES_SIZE / 2, Game.TILES_SIZE / 2, null);
             }
         }
     }
@@ -74,40 +92,40 @@ public class Editing extends State implements StateMethods{
     public void drawGrid(Graphics g){
         g.setColor(Color.darkGray);
         for (int i = 192; i <= 1760; i+=32){
-            g.drawLine(i, 160, i,800);
+            g.drawLine(i, 96, i,736);
         }
         //(Game.TILES_IN_WIDTH * Game.TILES_SIZE)
         //(Game.TILES_IN_HEIGHT * Game.TILES_SIZE)
-        for (int i = 192; i <= 800; i+=32){
+        for (int i = 128; i <= 736; i+=32){
             g.drawLine(160, i, 1760, i);
         }
         g.setColor(Color.RED);
-        g.drawLine(160, 160, 1760, 160);
-        g.drawLine(160, 159, 1760, 159);
+        g.drawLine(160, 96, 1760, 96);
+        g.drawLine(160, 95, 1760, 95);
 
-        g.drawLine(160, 160, 160, 800);
-        g.drawLine(159, 160, 159, 800);
+        g.drawLine(160, 96, 160, 736);
+        g.drawLine(159, 96, 159, 736);
 
-        g.drawLine(160, 800, 1760, 800);
-        g.drawLine(160, 799, 1760, 799);
+        g.drawLine(160, 736, 1760, 736);
+        g.drawLine(160, 735, 1760, 735);
 
-        g.drawLine(1760, 160, 1760, 800);
-        g.drawLine(1759, 160, 1759, 800);
+        g.drawLine(1760, 96, 1760, 736);
+        g.drawLine(1759, 96, 1759, 736);
     }
 
     private void drawPanels(Graphics g) {
         g.setColor(Color.GRAY);
-        g.fillRect(0, 832, 1920, 576);
+        g.fillRect(0, 768, 1920, 576);
 
         g.setColor(Color.BLACK);
-        g.drawLine(0, 833, 1920, 833);
-        g.drawLine(0, 832, 1920, 832);
-        g.drawLine(0, 831, 1920, 831);
+        g.drawLine(0, 768, 1920, 768);
+        g.drawLine(0, 767, 1920, 767);
+        g.drawLine(0, 766, 1920, 766);
     }
 
 
-    private void changePixel(int xTile, int yTile, int[][] lvlData){
-        lvlData[yTile][xTile] = 1;
+    private void changePixel(int xTile, int yTile, int[][] lvlData, int index){
+        lvlData[yTile][xTile] = index;
         System.out.println("x = " + yTile + " y = " + xTile);
         saveLvlToFile();
     }
@@ -116,30 +134,40 @@ public class Editing extends State implements StateMethods{
         BufferedImage temp = HelpMethods.LvlDataToImage(lvlData);
         LoadSave.SaveLevel(temp, lvlIndex);
     }
+
+    private void highlightChoosenBlock(Graphics g) {
+        g.setColor(Color.RED);
+        g.drawRect(224 + (64*xIndex), 800 + (64*yIndex), 32, 32);
+    }
+
+    //  g.drawImage(levelSprite[index], (224 + (64*j)), (800 + (64*i)), 32, 32, null);
     @Override
     public void mouseClicked(MouseEvent e) {
         System.out.println("mouseClicked");
         int x = e.getX();
         int y = e.getY();
-        if (x >= 160 && x <= 1760 && y >= 160 && y <= 800){
+        if (x >= 160 && x <= 1760 && y >= 96 && y <= 736){
             int xIndex = (x - 160) / 32;
-            int yIndex = (y - 160) / 32;
-            changePixel(xIndex, yIndex, lvlData);
+            int yIndex = (y - 96) / 32;
+            changePixel(xIndex, yIndex, lvlData, choosenBlock);
         }
-//        if (x >= 0 && x <= 192 && y >= 832 && y <= 1408){
-//            int xIndex = (x - 0) / 32;
-//            int yIndex = (y - 832) / 32;
-//            lvlIndex = yIndex * 6 + xIndex;
-//            setCurrentEditingLevel(lvlIndex);
-//        }
-//        if (x >= 0 && x <= 192 && y >= 1408 && y <= 1920){
-//            int xIndex = (x - 0) / 32;
-//            int yIndex = (y - 1408) / 32;
-//            if (xIndex == 0 && yIndex == 0){
-//                SaveLevel();
-//            }
-//        }
+
+        if (x >= 224 && x <= 992 && y >= 800 && y <= 1056){
+            if ((x - 224) % 64 <= 32 && (y - 800) % 64 <= 32){
+                System.out.println("да");
+                xIndex = (x - 224) / 64;
+                yIndex = (y - 800) / 64;
+                choosenBlock = yIndex * 12 + xIndex;
+//                highlightChoosenBlock(xIndex, yIndex);
+//                int index = yIndex*12 + xIndex;
+//                System.out.println("x = " + xIndex + " y = " + yIndex + " index = " + index);
+//                lvlData = HelpMethods.ReplaceTile(lvlData, index);
+//                saveLvlToFile();
+            }
+        }
     }
+
+
 
     @Override
     public void mousePressed(MouseEvent e) {

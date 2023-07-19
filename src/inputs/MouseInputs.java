@@ -9,6 +9,7 @@ import java.awt.event.MouseMotionListener;
 
 public class MouseInputs implements MouseListener, MouseMotionListener {
     private GamePanel gamePanel;
+    private boolean firstEdit = true, firstPlaying = true;
     public MouseInputs(GamePanel gamePanel){
         this.gamePanel = gamePanel;
     }
@@ -20,10 +21,18 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 //                gamePanel.getGame().getMenu().mouseClicked(e);
 //                break;
             case PLAYING:
+                if (firstPlaying){
+                    firstPlaying = false;
+                    break;
+                }
                 gamePanel.getGame().getPlaying().mouseClicked(e);
                 break;
             case EDIT:
-                System.out.println("Mouse Clicked in mouseInputs");
+                if (firstEdit){
+                    firstEdit = false;
+                    break;
+                }
+//                System.out.println("Mouse Clicked in mouseInputs");
                 gamePanel.getGame().getEditing().mouseClicked(e);
             default:
                 break;
@@ -37,11 +46,19 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
                 gamePanel.getGame().getMenu().mousePressed(e);
                 break;
             case PLAYING:
+                if (firstPlaying){
+                    firstPlaying = false;
+                    break;
+                }
                 gamePanel.getGame().getPlaying().mousePressed(e);
                 break;
             case OPTIONS:
                 gamePanel.getGame().getEditing().mousePressed(e);
             case EDIT:
+                if (firstEdit){
+                    firstEdit = false;
+                    break;
+                }
                 gamePanel.getGame().getEditing().mousePressed(e);
             default:
                 break;
@@ -55,11 +72,19 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
                 gamePanel.getGame().getMenu().mouseReleased(e);
                 break;
             case PLAYING:
+                if (firstPlaying){
+                    firstPlaying = false;
+                    break;
+                }
                 gamePanel.getGame().getPlaying().mouseReleased(e);
                 break;
             case OPTIONS:
                 gamePanel.getGame().getEditing().mouseReleased(e);
             case EDIT:
+                if (firstEdit){
+                    firstEdit = false;
+                    break;
+                }
                 gamePanel.getGame().getEditing().mouseReleased(e);
             default:
                 break;

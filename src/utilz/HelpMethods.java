@@ -45,7 +45,7 @@ public class HelpMethods {
 //            return true;
 //        return false;
 
-        if (value >= 48 || value == 11)
+        if (value >= 48 || value == 0)
             return false;
         return true;
     }
@@ -132,8 +132,11 @@ public class HelpMethods {
 //                if (value >= 48)
 //                    value = 11;
 
-                if (value >= 0 && value < 48)
+                if (value >= 0 && value < 48) {
                     lvlData[j][i] = value;
+//                    if (value == 0)
+//                        System.out.println("0");
+                }
                 else if (value == 100)
                     lvlData[j][i] = value;
                 else if (value == 200)
@@ -145,7 +148,7 @@ public class HelpMethods {
                 else if (value < 0)
                     lvlData[j][i] = value;
                 else
-                    lvlData[j][i] = 11;
+                    lvlData[j][i] = 0;
 
 //                lvlData[j][i] = value;
             }
@@ -159,9 +162,9 @@ public class HelpMethods {
             for (int i = 0; i < lvlData[0].length; i++){
                 int value = lvlData[j][i];
 
-                if (value >= 0 && value < 48)
-                    lvlImage.setRGB(i, j, new Color(value, (50 + (value*4)), (value * 5)).getRGB());
-
+                if (value >= 0 && value < 48) {
+                    lvlImage.setRGB(i, j, new Color(value, (50 + (value * 4)), (value * 5)).getRGB());
+                }
                 if (value == 100)
                     lvlImage.setRGB(i, j, new Color(value, 0, 0).getRGB());
 
