@@ -154,6 +154,10 @@ public class Playing extends State implements StateMethods{
         System.out.println("Player coins: " + playerCoins);
     }
 
+    public int getCoins(){
+        return LoadSave.LoadPlayerCoins();
+    }
+
     public void resetAll() {
         gameOver = false;
 //        paused = false;

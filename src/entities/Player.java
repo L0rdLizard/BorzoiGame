@@ -37,6 +37,7 @@ public class Player extends Entity{
 
     // Jump / Gravity
     private BufferedImage hpBarImg;
+    private BufferedImage coinBarImg;
     private float xDrawOffset = 36 * Game.SCALE;
     private float yDrawOffset = 29 * Game.SCALE;
     public boolean doubleJump = false;
@@ -45,6 +46,9 @@ public class Player extends Entity{
     // HP bar
     private int hpBarWidth = (int) (96 * Game.SCALE);
     private int hpBarHeight = (int) (32 * Game.SCALE);
+
+    private int coinBarWidth = (int) (38 * Game.SCALE);
+    private int coinBarHeight = (int) (38 * Game.SCALE);
     private int hpBarX = (int) (10 * Game.SCALE);
     private int hpBarY = (int) (10 * Game.SCALE);
     private int maxHealth = 3;
@@ -122,6 +126,7 @@ public class Player extends Entity{
     }
 
     private void updateHealthBar() {
+        coinBarImg = LoadSave.GetSpriteAtlas(LoadSave.COIN);
         switch (currentHealth){
             case 3:
                 hpBarImg = LoadSave.GetSpriteAtlas(LoadSave.HP_BAR3);
@@ -158,6 +163,10 @@ public class Player extends Entity{
 
     private void drawUI(Graphics g) {
         g.drawImage(hpBarImg, hpBarX, hpBarY, hpBarWidth, hpBarHeight, null);
+        g.drawImage(coinBarImg, hpBarX - 6, hpBarY + hpBarHeight + 10, coinBarWidth, coinBarHeight, null);
+        g.setColor(Color.yellow);
+        g.setFont(new Font("Arial", Font.BOLD, 30));
+        g.drawString(" " + playing.getCoins(), hpBarX + coinBarWidth, hpBarY + hpBarHeight + 57);
     }
 
 

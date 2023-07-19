@@ -33,6 +33,7 @@ public class LoadSave {
     public static final String HP_BAR3_1 = "heart3_1.png";
     public static final String HP_BAR3_2 = "heart3_2.png";
     public static final String HP_BAR3_3 = "heart3_3.png";
+    public static final String COIN = "one_coin.png";
 
     public static final String BALL_ATLAS = "pito_animation_sheet5_1.png";
     public static BufferedImage GetSpriteAtlas(String filename){
