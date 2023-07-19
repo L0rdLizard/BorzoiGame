@@ -32,11 +32,11 @@ public class Level {
     private int maxTilesOffsetY;
     private int maxLvlOffsetY;
     private Point playerSpawn;
-    private int lvlIndex;
+//    private int lvlIndex;
 
-    public Level(BufferedImage img, int lvlIndex){
+    public Level(BufferedImage img){
         this.img = img;
-        this.lvlIndex = lvlIndex;
+//        this.lvlIndex = lvlIndex;
         createLevelData();
         createEnemies();
         createSpikes();

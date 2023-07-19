@@ -74,9 +74,6 @@ public class ObjectManager {
 //    }
 
     public void loadObjects(Level newLevel) {
-//        potions = newLevel.getPotions();
-//        containers = newLevel.getContainers();
-//        coins = newLevel.getCoins();
         coins = new ArrayList<>(newLevel.getCoins());
         spikes = newLevel.getSpikes();
     }
@@ -90,20 +87,6 @@ public class ObjectManager {
                 coinImgs[j][i] = coinSprite.getSubimage(16 * i, 16 * j, 16, 16);
 
         spikeImg = LoadSave.GetSpriteAtlas(LoadSave.SPIKES);
-
-//        BufferedImage potionSprite = LoadSave.GetSpriteAtlas(LoadSave.POTION_ATLAS);
-//        potionImgs = new BufferedImage[2][7];
-//
-//        for (int j = 0; j < potionImgs.length; j++)
-//            for (int i = 0; i < potionImgs[j].length; i++)
-//                potionImgs[j][i] = potionSprite.getSubimage(12 * i, 16 * j, 12, 16);
-//
-//        BufferedImage containerSprite = LoadSave.GetSpriteAtlas(LoadSave.CONTAINER_ATLAS);
-//        containerImgs = new BufferedImage[2][8];
-//
-//        for (int j = 0; j < containerImgs.length; j++)
-//            for (int i = 0; i < containerImgs[j].length; i++)
-//                containerImgs[j][i] = containerSprite.getSubimage(40 * i, 30 * j, 40, 30);
     }
 
     public void update() {

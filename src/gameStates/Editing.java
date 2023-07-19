@@ -11,20 +11,17 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+
 
 public class Editing extends State implements StateMethods{
 
     private MenuButton[] editButtons = new MenuButton[6];
     private int[][] lvlData;
     private BufferedImage[] levelSprite;
-//    private ArrayList<Level> levels;
     BufferedImage[] allLevel = new BufferedImage[4];
     private int lvlIndex = 2;
     public Editing(Game game) {
         super(game);
-//        levels = new ArrayList<>();
-//        buildAllLevels();
         getAllLvlData();
         importOutsideSprite();
         setCurrentEditingLevel(lvlIndex);
@@ -40,19 +37,9 @@ public class Editing extends State implements StateMethods{
         drawMiniLevel(g);
         drawGrid(g);
         drawPanels(g);
-//        g.setColor(Color.darkGray);
-//        g.drawLine(64, 0, 64, (Game.TILES_IN_HEIGHT * Game.TILES_SIZE));
     }
 
-//    private void buildAllLevels() {
-//        BufferedImage[] allLevel = LoadSave.GetAllLevels();
-//        for (BufferedImage img : allLevel){
-//            levels.add(new Level(img));
-//        }
-//    }
-
     private void getAllLvlData(){
-//        levels = game.getPlaying().getLevelManager().getLevels();
         allLevel = LoadSave.GetAllLevels();
     }
     private void importOutsideSprite() {
@@ -72,19 +59,10 @@ public class Editing extends State implements StateMethods{
         lvlData = HelpMethods.GetLevelData(allLevel[lvlIndex]);
     }
 
-//    public void drawMiniLevel(Graphics g){
-//        for (int j = 0; j < levels.get(lvlIndex).getLvlData().length; j++){
-//            for (int i = 0; i < levels.get(lvlIndex).getLvlData()[0].length; i++){
-//                int index = levels.get(lvlIndex).getSpriteIndex(i, j);
-//                g.drawImage(levelSprite[index], Game.TILES_SIZE / 2 * i + 160, Game.TILES_SIZE / 2 * j + 160, Game.TILES_SIZE / 2, Game.TILES_SIZE / 2, null);
-//            }
-//        }
-//    }
 
     public void drawMiniLevel(Graphics g){
         for (int j = 0; j < lvlData.length; j++){
             for (int i = 0; i < lvlData[0].length; i++){
-//                int index = levels.get(lvlIndex).getSpriteIndex(i, j);
                 int index = lvlData[j][i];
                 g.drawImage(levelSprite[index], Game.TILES_SIZE / 2 * i + 160, Game.TILES_SIZE / 2 * j + 160, Game.TILES_SIZE / 2, Game.TILES_SIZE / 2, null);
             }
@@ -123,6 +101,11 @@ public class Editing extends State implements StateMethods{
         g.drawLine(0, 833, 1920, 833);
         g.drawLine(0, 832, 1920, 832);
         g.drawLine(0, 831, 1920, 831);
+    }
+
+    private void SaveLevel(){
+        BufferedImage temp = HelpMethods.LvlDataToImage(lvlData);
+        LoadSave.SaveLevel(temp, lvlIndex);
     }
 
     @Override

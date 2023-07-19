@@ -88,4 +88,13 @@ public class LoadSave {
         return imgs;
     }
 
+    public static void SaveLevel(BufferedImage temp, int lvlIndex) {
+        //save BufferedImage to file
+        try {
+            File outputfile = new File("src/lvls/" + (lvlIndex + 1) + ".png");
+            ImageIO.write(temp, "png", outputfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

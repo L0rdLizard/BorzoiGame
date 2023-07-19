@@ -30,15 +30,17 @@ public class LevelManager {
         Level newLevel = levels.get(lvlIndex);
         game.getPlaying().getEnemyManager().loadEnemies(newLevel);
         game.getPlaying().getPlayer().loadLvlData(newLevel.getLvlData());
+//        game.getPlaying().getObjectManager().loadObjects(newLevel);
         game.getPlaying().setMaxLvlOffsetX(newLevel.getLvlOffsetX());
         game.getPlaying().setMaxLvlOffsetY(newLevel.getLvlOffsetY());
+        game.getPlaying().getObjectManager().loadObjects(newLevel);
     }
 
     private void buildAllLevels() {
         int index = 0;
         BufferedImage[] allLevel = LoadSave.GetAllLevels();
         for (BufferedImage img : allLevel){
-            levels.add(new Level(img, index));
+            levels.add(new Level(img));
             index++;
         }
     }

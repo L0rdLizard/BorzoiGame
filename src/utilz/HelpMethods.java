@@ -40,7 +40,7 @@ public class HelpMethods {
 
     public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData){
         int value = lvlData[(int) yTile][(int) xTile];
-        // 11 - invisible barrier
+        // 11 - invisible
         if (value >= 48 || value < 0 || value != 11)
             return true;
         return false;
@@ -133,13 +133,24 @@ public class HelpMethods {
         return lvlData;
     }
 
+    public static BufferedImage LvlDataToImage(int[][] lvlData){
+        BufferedImage lvlImage = new BufferedImage(lvlData[0].length, lvlData.length, BufferedImage.TYPE_INT_RGB);
+        for (int j = 0; j < lvlData.length; j++){
+            for (int i = 0; i < lvlData[0].length; i++){
+                int value = lvlData[j][i];
+                lvlImage.setRGB(i, j, new Color(value, value, value).getRGB());
+            }
+        }
+        return lvlImage;
+    }
+
     public static ArrayList<Ball> GetBalls(BufferedImage lvlImage){
         ArrayList<Ball> list = new ArrayList<>();
         for (int j = 0; j < lvlImage.getHeight(); j++){
             for (int i = 0; i < lvlImage.getWidth(); i++){
                 Color color = new Color(lvlImage.getRGB(i, j));
                 int value = color.getGreen();
-                if (value == BALL)
+                if (value == 200)
                     list.add(new Ball(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
             }
         }
@@ -163,8 +174,9 @@ public class HelpMethods {
         for (int j = 0; j < img.getHeight(); j++)
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
-                int value = color.getBlue();
-                list.add(new Coin(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
+                int value = color.getGreen();
+                if (value == 255)
+                    list.add(new Coin(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
             }
         return list;
     }
@@ -187,9 +199,11 @@ public class HelpMethods {
         for (int j = 0; j < img.getHeight(); j++)
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
-                int value = color.getBlue();
-                if (value == SPIKE)
+                int value = color.getGreen();
+                if (value == 250) {
+                    System.out.println("yes");
                     list.add(new Spike(i * Game.TILES_SIZE, j * Game.TILES_SIZE, SPIKE));
+                }
             }
 
         return list;
