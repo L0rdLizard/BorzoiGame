@@ -47,12 +47,13 @@ public class ObjectManager {
             }
     }
 
-    public void applyEffectToPlayer(Coin p) {
-        // TODO
-//        if (p.getObjType() == RED_POTION)
-//            playing.getPlayer().changeHealth(RED_POTION_VALUE);
-//        else
-//            playing.getPlayer().changePower(BLUE_POTION_VALUE);
+    public void applyEffectToPlayer(Coin c) {
+        if (c.getObjType() == COIN)
+            playing.increaseCoin(1);
+        else if (c.getObjType() == COIN2)
+            playing.increaseCoin(2);
+        else if (c.getObjType() == COIN3)
+            playing.increaseCoin(3);
     }
 
     public void addCoin(int x, int y, int type){

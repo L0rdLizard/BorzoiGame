@@ -201,7 +201,6 @@ public class HelpMethods {
                 Color color = new Color(img.getRGB(i, j));
                 int value = color.getGreen();
                 if (value == 250) {
-                    System.out.println("yes");
                     list.add(new Spike(i * Game.TILES_SIZE, j * Game.TILES_SIZE, SPIKE));
                 }
             }

@@ -7,12 +7,10 @@ import static utilz.Constants.EnemyConstants.*;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.io.File;
 
 public class LoadSave {
     public static final String PLAYER_ATLAS = "pito_animation_sheet5_1.png";
@@ -93,6 +91,34 @@ public class LoadSave {
         try {
             File outputfile = new File("src/lvls/" + (lvlIndex + 1) + ".png");
             ImageIO.write(temp, "png", outputfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int LoadPlayerCoins() {
+        // load coins from bin file from folder gameData
+        try {
+            FileInputStream fileIn = new FileInputStream("res/gameData/coins.bin");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            int playerCoins = (int) in.readObject();
+            in.close();
+            fileIn.close();
+            return playerCoins;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public static void SavePlayerCoins(int playerCoins) {
+        // save playerCoins to bin file in folder res.gameData
+        try {
+            FileOutputStream fileOut = new FileOutputStream("res/gameData/coins.bin");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(playerCoins);
+            out.close();
+            fileOut.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

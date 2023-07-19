@@ -62,11 +62,11 @@ public class Level {
 
         if(maxTilesOffsetY < 0)
             maxLvlOffsetY = 0;
+//        System.out.println();
 
-        System.out.println();
-        System.out.println("lvlTilesHeight: " + lvlTilesHeight);
-        System.out.println("maxTilesOffsetY: " + maxTilesOffsetY);
-        System.out.println("maxLvlOffsetY: " + maxLvlOffsetY);
+//        System.out.println("lvlTilesHeight: " + lvlTilesHeight);
+//        System.out.println("maxTilesOffsetY: " + maxTilesOffsetY);
+//        System.out.println("maxLvlOffsetY: " + maxLvlOffsetY);
     }
 
     private void createEnemies() {

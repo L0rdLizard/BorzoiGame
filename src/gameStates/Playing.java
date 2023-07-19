@@ -145,6 +145,15 @@ public class Playing extends State implements StateMethods{
         objectManager.addCoin(x, y, type);
     }
 
+    public void increaseCoin(int coins){
+        int playerCoins;
+        // save player coins to bin file in folder gameData
+        playerCoins = LoadSave.LoadPlayerCoins();
+        playerCoins += coins;
+        LoadSave.SavePlayerCoins(playerCoins);
+        System.out.println("Player coins: " + playerCoins);
+    }
+
     public void resetAll() {
         gameOver = false;
 //        paused = false;
