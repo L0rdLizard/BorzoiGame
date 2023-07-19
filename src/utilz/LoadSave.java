@@ -26,6 +26,7 @@ public class LoadSave {
     public static final String COIN_ATLAS = "coins.png";
     public static final String SPIKES = "spikes.png";
     public static final String EDIT_BUTTONS = "editButtons.png";
+    public static final String PES = "pes.png";
 
 
     // HP Bar

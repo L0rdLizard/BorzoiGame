@@ -18,20 +18,29 @@ public class Editing extends State implements StateMethods{
     private MenuButton[] editButtons = new MenuButton[6];
     private int[][] lvlData;
     private BufferedImage[] levelSprite;
-    BufferedImage[] allLevel = new BufferedImage[4];
+    private BufferedImage[] allLevel = new BufferedImage[4];
+    private BufferedImage[] pesSprites = new BufferedImage[3];
     private int choosenBlock = 0;
     private int xIndex = 0;
     private int yIndex = 0;
 
     // buttons
-    private BufferedImage[] imgs;
+    private BufferedImage[] imgs = new BufferedImage[4];
 
     private int lvlIndex = 2;
     public Editing(Game game) {
         super(game);
         getAllLvlData();
         importOutsideSprite();
+        initPesSprites();
         setCurrentEditingLevel(lvlIndex);
+    }
+
+    private void initPesSprites() {
+        BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PES);
+        for (int i = 0; i < 3; i++){
+            pesSprites[i] = img.getSubimage(i*32, 0, 32, 32);
+        }
     }
 
     @Override
@@ -69,6 +78,10 @@ public class Editing extends State implements StateMethods{
                 g.drawImage(levelSprite[index], (224 + (64*j)), (800 + (64*i)), 32, 32, null);
             }
         }
+        // draw pes sprites right side
+        for (int i = 0; i < 3; i++){
+            g.drawImage(pesSprites[i], (992 ), (800 + (64*i)), 32, 32, null);
+        }
     }
 
     private void setCurrentEditingLevel(int lvlIndex){
@@ -82,9 +95,16 @@ public class Editing extends State implements StateMethods{
         for (int j = 0; j < lvlData.length; j++){
             for (int i = 0; i < lvlData[0].length; i++){
                 int index = lvlData[j][i];
-                if (index >= 48)
-                    index = 0;
-                g.drawImage(levelSprite[index], Game.TILES_SIZE / 2 * i + 160, Game.TILES_SIZE / 2 * j + 96, Game.TILES_SIZE / 2, Game.TILES_SIZE / 2, null);
+//                if (index >= 48)
+//                    index = 0;
+                if (index == 100)
+                    g.drawImage(pesSprites[0], Game.TILES_SIZE / 2 * i + 160, Game.TILES_SIZE / 2 * j + 96, Game.TILES_SIZE / 2, Game.TILES_SIZE / 2, null);
+                else if (index == 200)
+                    g.drawImage(pesSprites[1], Game.TILES_SIZE / 2 * i + 160, Game.TILES_SIZE / 2 * j + 96, Game.TILES_SIZE / 2, Game.TILES_SIZE / 2, null);
+                else if (index == 250)
+                    g.drawImage(pesSprites[2], Game.TILES_SIZE / 2 * i + 160, Game.TILES_SIZE / 2 * j + 96, Game.TILES_SIZE / 2, Game.TILES_SIZE / 2, null);
+                else
+                    g.drawImage(levelSprite[index], Game.TILES_SIZE / 2 * i + 160, Game.TILES_SIZE / 2 * j + 96, Game.TILES_SIZE / 2, Game.TILES_SIZE / 2, null);
             }
         }
     }
@@ -140,12 +160,7 @@ public class Editing extends State implements StateMethods{
         g.drawRect(224 + (64*xIndex), 800 + (64*yIndex), 32, 32);
     }
 
-    //  g.drawImage(levelSprite[index], (224 + (64*j)), (800 + (64*i)), 32, 32, null);
-    @Override
-    public void mouseClicked(MouseEvent e) {
-//        System.out.println("mouseClicked");
-        int x = e.getX();
-        int y = e.getY();
+    private void clickCheck(int x, int y){
         if (x >= 160 && x <= 1760 && y >= 96 && y <= 736){
             int xIndex = (x - 160) / 32;
             int yIndex = (y - 96) / 32;
@@ -154,17 +169,38 @@ public class Editing extends State implements StateMethods{
 
         if (x >= 224 && x <= 992 && y >= 800 && y <= 1056){
             if ((x - 224) % 64 <= 32 && (y - 800) % 64 <= 32){
-//                System.out.println("да");
                 xIndex = (x - 224) / 64;
                 yIndex = (y - 800) / 64;
                 choosenBlock = yIndex * 12 + xIndex;
-//                highlightChoosenBlock(xIndex, yIndex);
-//                int index = yIndex*12 + xIndex;
-//                System.out.println("x = " + xIndex + " y = " + yIndex + " index = " + index);
-//                lvlData = HelpMethods.ReplaceTile(lvlData, index);
-//                saveLvlToFile();
             }
         }
+
+        if (x >= 992 && x <= 1024 && y >= 800 && y <= 832){
+            xIndex = (x - 224) / 64;
+            yIndex = (y - 800) / 64;
+            choosenBlock = 100;
+        }
+
+        if (x >= 992 && x <= 1024 && y >= 864 && y <= 896){
+            xIndex = (x - 224) / 64;
+            yIndex = (y - 800) / 64;
+            choosenBlock = 200;
+        }
+
+        if (x >= 992 && x <= 1024 && y >= 928 && y <= 960){
+            xIndex = (x - 224) / 64;
+            yIndex = (y - 800) / 64;
+            choosenBlock = 250;
+        }
+    }
+
+    //  g.drawImage(levelSprite[index], (224 + (64*j)), (800 + (64*i)), 32, 32, null);
+    @Override
+    public void mouseClicked(MouseEvent e) {
+//        System.out.println("mouseClicked");
+        int x = e.getX();
+        int y = e.getY();
+        clickCheck(x, y);
     }
 
 
