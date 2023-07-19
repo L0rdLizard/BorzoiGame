@@ -33,6 +33,7 @@ public class Editing extends State implements StateMethods{
         getAllLvlData();
         importOutsideSprite();
         initPesSprites();
+        initButtons();
         setCurrentEditingLevel(lvlIndex);
     }
 
@@ -41,6 +42,18 @@ public class Editing extends State implements StateMethods{
         for (int i = 0; i < 3; i++){
             pesSprites[i] = img.getSubimage(i*32, 0, 32, 32);
         }
+    }
+
+    private void initButtons(){
+        imgs[0] = LoadSave.GetSpriteAtlas(LoadSave.EDIT_BUTTONS).getSubimage(0, 0, 140, 56);
+        imgs[1] = LoadSave.GetSpriteAtlas(LoadSave.EDIT_BUTTONS).getSubimage(0, 56, 140, 56);
+        imgs[2] = LoadSave.GetSpriteAtlas(LoadSave.EDIT_BUTTONS).getSubimage(0, 112, 140, 56);
+        imgs[3] = LoadSave.GetSpriteAtlas(LoadSave.EDIT_BUTTONS).getSubimage(0, 168, 140, 56);
+//        for (int i = 0; i < 4; i++){
+//            editButtons[i] = new MenuButton(imgs[i], 64 + (i*64), 0, 64, 64);
+//        }
+//        editButtons[4] = new MenuButton(imgs[0], 0, 0, 64, 64);
+//        editButtons[5] = new MenuButton(imgs[1], 64, 0, 64, 64);
     }
 
     @Override
@@ -55,6 +68,7 @@ public class Editing extends State implements StateMethods{
         drawPanels(g);
         drawOutsideSprites(g);
         highlightChoosenBlock(g);
+        drawButtons(g);
     }
 
     private void getAllLvlData(){
@@ -78,9 +92,15 @@ public class Editing extends State implements StateMethods{
                 g.drawImage(levelSprite[index], (224 + (64*j)), (800 + (64*i)), 32, 32, null);
             }
         }
-        // draw pes sprites right side
+    }
+
+    private void drawButtons(Graphics g){
         for (int i = 0; i < 3; i++){
-            g.drawImage(pesSprites[i], (992 ), (800 + (64*i)), 32, 32, null);
+            g.drawImage(pesSprites[i], (992), (800 + (64*i)), 32, 32, null);
+        }
+
+        for (int i = 0; i < 4; i++){
+            g.drawImage(imgs[i], (64 + (128*i)), 0, 128, 64, null);
         }
     }
 
