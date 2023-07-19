@@ -19,7 +19,7 @@ public class Editing extends State implements StateMethods{
     private int[][] lvlData;
     private BufferedImage[] levelSprite;
     BufferedImage[] allLevel = new BufferedImage[4];
-    private int lvlIndex = 2;
+    private int lvlIndex = 3;
     public Editing(Game game) {
         super(game);
         getAllLvlData();
@@ -54,7 +54,7 @@ public class Editing extends State implements StateMethods{
     }
 
     private void setCurrentEditingLevel(int lvlIndex){
-        this.lvlIndex = lvlIndex;
+//        this.lvlIndex = lvlIndex;
 //        lvlData = levels.get(lvlIndex).getLvlData();
         lvlData = HelpMethods.GetLevelData(allLevel[lvlIndex]);
     }
@@ -64,6 +64,8 @@ public class Editing extends State implements StateMethods{
         for (int j = 0; j < lvlData.length; j++){
             for (int i = 0; i < lvlData[0].length; i++){
                 int index = lvlData[j][i];
+                if (index >= 48)
+                    index = 11;
                 g.drawImage(levelSprite[index], Game.TILES_SIZE / 2 * i + 160, Game.TILES_SIZE / 2 * j + 160, Game.TILES_SIZE / 2, Game.TILES_SIZE / 2, null);
             }
         }
@@ -103,14 +105,40 @@ public class Editing extends State implements StateMethods{
         g.drawLine(0, 831, 1920, 831);
     }
 
-    private void SaveLevel(){
+
+    private void changePixel(int xTile, int yTile, int[][] lvlData){
+        lvlData[yTile][xTile] = 1;
+        System.out.println("x = " + yTile + " y = " + xTile);
+        saveLvlToFile();
+    }
+
+    private void saveLvlToFile(){
         BufferedImage temp = HelpMethods.LvlDataToImage(lvlData);
         LoadSave.SaveLevel(temp, lvlIndex);
     }
-
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        System.out.println("mouseClicked");
+        int x = e.getX();
+        int y = e.getY();
+        if (x >= 160 && x <= 1760 && y >= 160 && y <= 800){
+            int xIndex = (x - 160) / 32;
+            int yIndex = (y - 160) / 32;
+            changePixel(xIndex, yIndex, lvlData);
+        }
+//        if (x >= 0 && x <= 192 && y >= 832 && y <= 1408){
+//            int xIndex = (x - 0) / 32;
+//            int yIndex = (y - 832) / 32;
+//            lvlIndex = yIndex * 6 + xIndex;
+//            setCurrentEditingLevel(lvlIndex);
+//        }
+//        if (x >= 0 && x <= 192 && y >= 1408 && y <= 1920){
+//            int xIndex = (x - 0) / 32;
+//            int yIndex = (y - 1408) / 32;
+//            if (xIndex == 0 && yIndex == 0){
+//                SaveLevel();
+//            }
+//        }
     }
 
     @Override

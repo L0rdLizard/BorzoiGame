@@ -39,11 +39,15 @@ public class HelpMethods {
     }
 
     public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData){
-        int value = lvlData[(int) yTile][(int) xTile];
+        int value = lvlData[yTile][xTile];
         // 11 - invisible
-        if (value >= 48 || value < 0 || value != 11)
-            return true;
-        return false;
+//        if (value >= 48 || value < 0 || value != 11)
+//            return true;
+//        return false;
+
+        if (value >= 48 || value == 11)
+            return false;
+        return true;
     }
 
     public static float GetEntityXPosNextToWall(Rectangle2D.Float hitbox, float xSpeed) {
@@ -125,9 +129,25 @@ public class HelpMethods {
             for (int i = 0; i < lvlImage.getWidth(); i++){
                 Color color = new Color(lvlImage.getRGB(i, j));
                 int value = color.getRed();
-                if (value >= 48)
-                    value = 0;
-                lvlData[j][i] = value;
+//                if (value >= 48)
+//                    value = 11;
+
+                if (value >= 0 && value < 48)
+                    lvlData[j][i] = value;
+                else if (value == 100)
+                    lvlData[j][i] = value;
+                else if (value == 200)
+                    lvlData[j][i] = value;
+                else if (value == 250)
+                    lvlData[j][i] = value;
+                else if (value == 255)
+                    lvlData[j][i] = value;
+                else if (value < 0)
+                    lvlData[j][i] = value;
+                else
+                    lvlData[j][i] = 11;
+
+//                lvlData[j][i] = value;
             }
         }
         return lvlData;
@@ -138,7 +158,22 @@ public class HelpMethods {
         for (int j = 0; j < lvlData.length; j++){
             for (int i = 0; i < lvlData[0].length; i++){
                 int value = lvlData[j][i];
-                lvlImage.setRGB(i, j, new Color(value, value, value).getRGB());
+
+                if (value >= 0 && value < 48)
+                    lvlImage.setRGB(i, j, new Color(value, (50 + (value*4)), (value * 5)).getRGB());
+
+                if (value == 100)
+                    lvlImage.setRGB(i, j, new Color(value, 0, 0).getRGB());
+
+                if (value == 200)
+                    lvlImage.setRGB(i, j, new Color(value, 0, 0).getRGB());
+
+                if (value == 250)
+                    lvlImage.setRGB(i, j, new Color(value, 0, 0).getRGB());
+
+//                if (value >= 48)
+//                    lvlImage.setRGB(i, j, new Color(11, value, 0).getRGB());
+//                lvlImage.setRGB(i, j, new Color(value, value, value).getRGB());
             }
         }
         return lvlImage;
@@ -149,7 +184,7 @@ public class HelpMethods {
         for (int j = 0; j < lvlImage.getHeight(); j++){
             for (int i = 0; i < lvlImage.getWidth(); i++){
                 Color color = new Color(lvlImage.getRGB(i, j));
-                int value = color.getGreen();
+                int value = color.getRed();
                 if (value == 200)
                     list.add(new Ball(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
             }
@@ -174,7 +209,7 @@ public class HelpMethods {
         for (int j = 0; j < img.getHeight(); j++)
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
-                int value = color.getGreen();
+                int value = color.getRed();
                 if (value == 255)
                     list.add(new Coin(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
             }
@@ -185,7 +220,7 @@ public class HelpMethods {
         for (int j = 0; j < lvlImage.getHeight(); j++){
             for (int i = 0; i < lvlImage.getWidth(); i++){
                 Color color = new Color(lvlImage.getRGB(i, j));
-                int value = color.getGreen();
+                int value = color.getRed();
                 if (value == 100)
                     return new Point(i * Game.TILES_SIZE, j * Game.TILES_SIZE);
             }
@@ -199,7 +234,7 @@ public class HelpMethods {
         for (int j = 0; j < img.getHeight(); j++)
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
-                int value = color.getGreen();
+                int value = color.getRed();
                 if (value == 250) {
                     list.add(new Spike(i * Game.TILES_SIZE, j * Game.TILES_SIZE, SPIKE));
                 }
