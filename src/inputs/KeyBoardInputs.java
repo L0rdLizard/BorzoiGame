@@ -30,6 +30,9 @@ public class KeyBoardInputs implements KeyListener {
             case OPTIONS:
                 gamePanel.getGame().getEditing().keyReleased(e);
                 break;
+            case EDIT:
+                gamePanel.getGame().getEditing().keyReleased(e);
+                break;
             default:
                 break;
         }
@@ -45,6 +48,9 @@ public class KeyBoardInputs implements KeyListener {
                 gamePanel.getGame().getPlaying().keyPressed(e);
                 break;
             case OPTIONS:
+                gamePanel.getGame().getEditing().keyPressed(e);
+                break;
+            case EDIT:
                 gamePanel.getGame().getEditing().keyPressed(e);
                 break;
             default:

@@ -79,6 +79,9 @@ public class Game implements Runnable{
                 break;
             case OPTIONS:
 //                System.exit(0);
+//                editing.update();
+                break;
+            case EDIT:
                 editing.update();
                 break;
             default:
@@ -94,6 +97,9 @@ public class Game implements Runnable{
                 playing.draw(g);
                 break;
             case OPTIONS:
+//                editing.draw(g);
+                break;
+            case EDIT:
                 editing.draw(g);
                 break;
             default:
