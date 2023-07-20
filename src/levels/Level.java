@@ -152,4 +152,9 @@ public class Level {
     public ArrayList<Spike> getSpikes() {
         return spikes;
     }
+
+    public void setLvlData(int[][] lvlData) {
+    	this.lvlData = lvlData;
+    }
+
 }

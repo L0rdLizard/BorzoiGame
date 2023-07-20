@@ -16,7 +16,7 @@ public class LevelManager {
     public LevelManager(Game game){
         this.game = game;
         importOutsideSprite();
-
+        levels = new ArrayList<>();
         buildAllLevels();
     }
 
@@ -46,7 +46,7 @@ public class LevelManager {
 
     public void buildAllLevels() {
         int index = 0;
-        levels = new ArrayList<>();
+
         System.out.println("Building all levels");
         BufferedImage[] allLevel = LoadSave.GetAllLevels();
 

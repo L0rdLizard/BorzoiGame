@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 
 public class Editing extends State implements StateMethods{
@@ -73,6 +74,7 @@ public class Editing extends State implements StateMethods{
     }
 
     private void getAllLvlData(){
+
         allLevel = LoadSave.GetAllLevels();
     }
     private void importOutsideSprite() {
@@ -111,7 +113,12 @@ public class Editing extends State implements StateMethods{
 //        lvlData = levels.get(lvlIndex).getLvlData();
         this.lvlIndex = index;
         getAllLvlData();
-        lvlData = HelpMethods.GetLevelData(allLevel[lvlIndex]);
+//        allLevel = game.getPlaying().getLevelManager().getLevels();
+
+
+//        lvlData = HelpMethods.GetLevelData(allLevel[lvlIndex]);
+        lvlData = game.getPlaying().getLevelManager().getLevels().get(index).getLvlData();
+
     }
 
 
@@ -175,6 +182,17 @@ public class Editing extends State implements StateMethods{
     }
 
     private void saveLvlToFile(){
+        BufferedImage temp = HelpMethods.LvlDataToImage(lvlData);
+        saveLocal();
+        LoadSave.SaveLevel(temp, lvlIndex);
+    }
+
+    private void saveLocal() {
+        game.getPlaying().getLevelManager().getLevels().get(lvlIndex).setLvlData(lvlData);
+        game.getPlaying().getPlayer().loadLvlData(lvlData);
+    }
+
+    private void saveCurrentLvl(){
         BufferedImage temp = HelpMethods.LvlDataToImage(lvlData);
         LoadSave.SaveLevel(temp, lvlIndex);
     }
@@ -276,9 +294,13 @@ public class Editing extends State implements StateMethods{
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             GameStates.state = GameStates.MENU;
+            ArrayList<Level> levels = game.getPlaying().getLevelManager().getLevels();
             game.getPlaying().getLevelManager().buildAllLevels();
-//            game.getPlaying().getLevelManager().reloadCurrentLevel();
-//            game.initClasses();
+        }
+        if(e.getKeyCode() == KeyEvent.VK_G) {
+//            GameStates.state = GameStates.MENU;
+            ArrayList<Level> levels = game.getPlaying().getLevelManager().getLevels();
+            game.getPlaying().getLevelManager().buildAllLevels();
         }
     }
 
