@@ -30,11 +30,12 @@ public class Editing extends State implements StateMethods{
     private int lvlIndex = 0;
     public Editing(Game game) {
         super(game);
-        getAllLvlData();
+        setCurrentEditingLevel(lvlIndex);
+//        getAllLvlData();
         importOutsideSprite();
         initPesSprites();
         initButtons();
-        setCurrentEditingLevel(lvlIndex);
+
     }
 
     private void initPesSprites() {

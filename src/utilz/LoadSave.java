@@ -58,6 +58,7 @@ public class LoadSave {
     }
 
     public static BufferedImage[] GetAllLevels() {
+        System.out.println("xyz");
         URL url = LoadSave.class.getResource("/lvls");
         File file = null;
 
@@ -72,11 +73,10 @@ public class LoadSave {
 
         for (int i = 0; i < filesSorted.length; i++)
             for (int j = 0; j < files.length; j++) {
-                if (files[j].getName().equals((i + 1) + ".png"))
+                if (files[j].getName().equals((i + 1) + ".png")) {
                     filesSorted[i] = files[j];
-
+                }
             }
-
         BufferedImage[] imgs = new BufferedImage[filesSorted.length];
 
         for (int i = 0; i < imgs.length; i++)

@@ -47,6 +47,19 @@ public class Playing extends State implements StateMethods{
         loadStartLevel();
     }
 
+    private void initClasses() {
+        levelManager = new LevelManager(game);
+        enemyManager = new EnemyManager(this);
+        objectManager = new ObjectManager(this);
+
+        player = new Player(200, 300, (int) (80 * Game.SCALE), (int) (64 * Game.SCALE), this);
+        player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
+        player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
+
+        gameOverOverlay = new GameOverOverlay(this);
+        levelCompletedOverlay = new LevelCompletedOverlay(this);
+    }
+
     public void loadNextLevel(){
         resetAll();
         levelManager.loadNextLevel();
@@ -60,20 +73,6 @@ public class Playing extends State implements StateMethods{
     private void calcLvlOffset() {
         maxLvlOffsetX = levelManager.getCurrentLevel().getLvlOffsetX();
         maxLvlOffsetY = levelManager.getCurrentLevel().getLvlOffsetY();
-    }
-
-    private void initClasses() {
-        levelManager = new LevelManager(game);
-        enemyManager = new EnemyManager(this);
-        objectManager = new ObjectManager(this);
-//        player = new Player(500, 400, (int) (48 * SCALE), (int) (36 * SCALE));
-//        player = new Player(200, 300, (int) (64 * Game.SCALE), (int) (48 * Game.SCALE));
-        player = new Player(200, 300, (int) (80 * Game.SCALE), (int) (64 * Game.SCALE), this);
-        player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
-        player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
-
-        gameOverOverlay = new GameOverOverlay(this);
-        levelCompletedOverlay = new LevelCompletedOverlay(this);
     }
 
     @Override
