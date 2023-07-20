@@ -27,7 +27,7 @@ public class Editing extends State implements StateMethods{
     // buttons
     private BufferedImage[] imgs = new BufferedImage[4];
 
-    private int lvlIndex = 2;
+    private int lvlIndex = 0;
     public Editing(Game game) {
         super(game);
         getAllLvlData();
@@ -99,14 +99,17 @@ public class Editing extends State implements StateMethods{
             g.drawImage(pesSprites[i], (992), (800 + (64*i)), 32, 32, null);
         }
 
-        for (int i = 0; i < 4; i++){
-            g.drawImage(imgs[i], (64 + (128*i)), 0, 128, 64, null);
+        for (int i = 0; i < 2; i++){
+            g.drawImage(imgs[i], (1088 ), 800 + 96 * i, 128, 64, null);
+            g.drawImage(imgs[i+2], (1248 ), 800 + 96 * i, 128, 64, null);
         }
     }
 
-    private void setCurrentEditingLevel(int lvlIndex){
+    private void setCurrentEditingLevel(int index){
 //        this.lvlIndex = lvlIndex;
 //        lvlData = levels.get(lvlIndex).getLvlData();
+        this.lvlIndex = index;
+        getAllLvlData();
         lvlData = HelpMethods.GetLevelData(allLevel[lvlIndex]);
     }
 
@@ -212,6 +215,24 @@ public class Editing extends State implements StateMethods{
             yIndex = (y - 800) / 64;
             choosenBlock = 250;
         }
+//        g.drawImage(imgs[i], (1088 ), 800 + 96 * i, 128, 64, null);
+//        g.drawImage(imgs[i+2], (1248 ), 800 + 96 * i, 128, 64, null);
+        // level1
+        if (x >= 1088 && x <= 1216 && y >= 800 && y <= 864){
+            setCurrentEditingLevel(0);
+        }
+        //level2
+        if (x >= 1248 && x <= 1376 && y >= 800 && y <= 864){
+            setCurrentEditingLevel(1);
+        }
+        //level3
+        if (x >= 1088 && x <= 1216 && y >= 896 && y <= 960){
+            setCurrentEditingLevel(2);
+        }
+        //level4
+        if (x >= 1248 && x <= 1376 && y >= 896 && y <= 960){
+            setCurrentEditingLevel(3);
+        }
     }
 
     //  g.drawImage(levelSprite[index], (224 + (64*j)), (800 + (64*i)), 32, 32, null);
@@ -227,17 +248,27 @@ public class Editing extends State implements StateMethods{
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        int x = e.getX();
+        int y = e.getY();
+        clickCheck(x, y);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        int x = e.getX();
+        int y = e.getY();
+        clickCheck(x, y);
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
+    }
 
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        int x = e.getX();
+        int y = e.getY();
+        clickCheck(x, y);
     }
 
     @Override

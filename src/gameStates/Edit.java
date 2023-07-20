@@ -46,6 +46,11 @@ public class Edit extends State implements StateMethods{
     }
 
     @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
     public void keyPressed(KeyEvent e) {
 
     }

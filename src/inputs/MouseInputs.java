@@ -102,7 +102,17 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        switch (GameStates.state) {
+            case EDIT:
+                if (firstEdit) {
+                    firstEdit = false;
+                    break;
+                }
+                gamePanel.getGame().getEditing().mouseDragged(e);
 
+            default:
+                break;
+        }
     }
 
     @Override
